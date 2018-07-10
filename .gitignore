@@ -1,2 +1,4 @@
 /.idea
 /venv
+/_site
+/Gemfile.lock
