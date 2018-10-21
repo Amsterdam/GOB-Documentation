@@ -11,57 +11,70 @@ Within this directory the GOB projects can be instantiated.
 mkdir gob
 cd gob
 
-# GOB Documentation
+# GOB Documentation (this project)
 git clone git@github.com:Amsterdam/GOB-Documentation.git
 
-# GOB Workflow
+# GOB Workflow (the workflow router)
 git clone git@github.com:Amsterdam/GOB-Workflow.git
 
-# GOB Import
+# GOB Import (the import of the GOB sources)
 git clone git@github.com:Amsterdam/GOB-Import-Client-Template.git
 
-# GOB Upload
+# GOB Upload (the upload of imported data into GOB)
 git clone git@github.com:Amsterdam/GOB-Upload.git
 
+# GOB API (the exposure of GOB data via an API)
+git clone git@github.com:Amsterdam/GOB-API.git
+
+# GOB Export (the construction of GOB "products")
+git clone git@github.com:Amsterdam/GOB-Export.git
+
+# GOB Management API (GOB management overview and control - API)
+git clone git@github.com:Amsterdam/GOB-API.git
+
+# GOB Management Frontenc (GOB management overview and control - frontend)
+git clone git@github.com:Amsterdam/GOB-Management-Frontend.git
 
 ```
 
 Follow the instructions in each project to build and start each project.
 
-In order to communicate with other components you need at least a running message broker container.
-To access the storage you need a running storage container.
+## Running GOB
 
-### Message Broker
+GOB requires an infrastructure with a:
+- Message Broker
+- Management Database
+- Database
 
-To start a message broker instance follow the instructions in the GOB Workflow project.
+### Message Broker and Management Database
+
+To start a message broker and management database instance
+follow the instructions in the GOB Workflow project.
+
+```bash
+# Message broker and management database
+cd gob/GOB-Workflow
+docker-compose up rabbitmq &
+docker-compose up management_database &
+
+```
 
 ### Storage
 
-To start a database instance follow the instructions in the GOB Upload porject
-
-### Startup
-
-Once every project has been build and initialized the startup for GOB will be:
-
-```bash
-# Message broker
-cd gob/GOB-Workflow
-docker-compose up rabbitmq &
-
-```
+To start a database instance
+follow the instructions in the GOB Upload project
 
 ```bash
 # Database
 cd gob/GOB-Upload
 docker-compose up database &
-
 ```
 
-The message broker and database are only used for local development.
+## Startup
+
+The message broker and databases are only used for local development.
 
 The Datapunt infrastructure hosts its own instances.
-
-These global instances are used when running GOB outside the local development environment.
 
 Now start the workflow and upload components:
 
@@ -69,21 +82,16 @@ Now start the workflow and upload components:
 # Workflow manager
 cd gob/GOB-Workflow
 source venv/bin/activate
-
 cd src
-export MESSAGE_BROKER_ADDRESS=localhost
 python -m gobworkflow
 
 ```
-
 
 ```bash
 # Upload client
 cd gob/GOB-Upload
 source venv/bin/activate
-
 cd src
-export MESSAGE_BROKER_ADDRESS=localhost
 python -m gobuploadservice
 
 ```
@@ -96,9 +104,7 @@ To start an import:
 # Import
 cd gob/GOB-Import-Client-Template/
 source venv/bin/activate
-
 cd src
-export MESSAGE_BROKER_ADDRESS=localhost
 python -m gobimportclient example/meetbouten.json
 
 ```
