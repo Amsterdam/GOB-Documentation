@@ -45,6 +45,7 @@ GOB requires an infrastructure with a:
 - Message Broker
 - Management Database
 - Database
+- Shared network and storage
 
 ### Message Broker and Management Database
 
@@ -68,6 +69,14 @@ follow the instructions in the GOB Upload project
 # Database
 cd gob/GOB-Upload
 docker-compose up database &
+```
+
+### Shared network and storage
+
+```bash
+docker network create gob-network
+docker volume create gob-volume --opt device=/tmp/gob --opt o=bind
+
 ```
 
 ## Startup
