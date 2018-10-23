@@ -75,7 +75,7 @@ docker-compose up database &
 
 ```bash
 docker network create gob-network
-docker volume create gob-volume --opt device=/tmp/gob --opt o=bind
+docker volume create gob-volume --opt device=/tmp --opt o=bind
 
 ```
 
