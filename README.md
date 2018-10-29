@@ -50,13 +50,18 @@ GOB requires an infrastructure with a:
 - Management Database
 
 To build and start the infrastructure
-follow the instructions in the GOB Infra project.
+follow the instructions in the [GOB Infra project](https://github.com/Amsterdam/GOB-Infra)
 
 When the infrastructure has been setup the other GOB components can be started.
 
-A minimal configuration requires the workflow and upload components.
+A minimal configuration requires the
+**[workflow](https://github.com/Amsterdam/GOB-Workflow)**
+and
+**[upload](https://github.com/Amsterdam/GOB-Upload)**
+components.
 
-A (small) import can be run to test the configuration.
+A (small) **[import](https://github.com/Amsterdam/GOB-Import)**
+can be run to test the configuration.
 
 ## Branches
 
