@@ -41,82 +41,22 @@ Follow the instructions in each project to build and start each project.
 
 ## Running GOB
 
-GOB requires an infrastructure with a:
-- Message Broker
-- Management Database
-- Database
-- Shared network and storage
-
-### Message Broker and Management Database
-
-To start a message broker and management database instance
-follow the instructions in the GOB Workflow project.
-
-```bash
-# Message broker and management database
-cd gob/GOB-Workflow
-docker-compose up rabbitmq &
-docker-compose up management_database &
-
-```
-
-### Storage
-
-To start a database instance
-follow the instructions in the GOB Upload project
-
-```bash
-# Database
-cd gob/GOB-Upload
-docker-compose up database &
-```
-
-### Shared network and storage
-
-```bash
-docker network create gob-network
-docker volume create gob-volume --opt device=/tmp --opt o=bind
-
-```
-
 ## Startup
 
-The message broker and databases are only used for local development.
+GOB requires an infrastructure with a:
+- Shared network and volume
+- Message Broker
+- Database
+- Management Database
 
-The Datapunt infrastructure hosts its own instances.
+To build and start the infrastructure
+follow the instructions in the GOB Infra project.
 
-Now start the workflow and upload components:
+When the infrastructure has been setup the other GOB components can be started.
 
-```bash
-# Workflow manager
-cd gob/GOB-Workflow
-source venv/bin/activate
-cd src
-python -m gobworkflow
+A minimal configuration requires the workflow and upload components.
 
-```
-
-```bash
-# Upload client
-cd gob/GOB-Upload
-source venv/bin/activate
-cd src
-python -m gobuploadservice
-
-```
-
-The basic infrastructure is now available.
-
-To start an import:
-
-```bash
-# Import
-cd gob/GOB-Import-Client-Template/
-source venv/bin/activate
-cd src
-python -m gobimportclient example/meetbouten.json
-
-```
+A (small) import can be run to test the configuration.
 
 ## Branches
 
