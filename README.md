@@ -50,7 +50,7 @@ GOB requires an infrastructure with a:
 - Management Database
 
 To build and start the infrastructure
-follow the instructions in the [GOB Infra project](https://github.com/Amsterdam/GOB-Infra)
+follow the instructions in the **[GOB Infra project](https://github.com/Amsterdam/GOB-Infra)**
 
 When the infrastructure has been setup the other GOB components can be started.
 
