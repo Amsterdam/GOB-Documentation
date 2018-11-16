@@ -14,6 +14,12 @@ cd gob
 # GOB Documentation (this project)
 git clone git@github.com:Amsterdam/GOB-Documentation.git
 
+# GOB Infra (GOB infrastructure components)
+git clone git@github.com:Amsterdam/GOB-Infra.git
+
+# GOB Core (GOB shared code)
+git clone git@github.com:Amsterdam/GOB-Core.git
+
 # GOB Workflow (the workflow router)
 git clone git@github.com:Amsterdam/GOB-Workflow.git
 
@@ -47,21 +53,51 @@ GOB requires an infrastructure with a:
 - Shared network and volume
 - Message Broker
 - Database
-- Management Database
+- Shared network and storage
 
-To build and start the infrastructure
-follow the instructions in the **[GOB Infra project](https://github.com/Amsterdam/GOB-Infra)**
+### Shared network and storage
 
-When the infrastructure has been setup the other GOB components can be started.
+```bash
+docker network create gob-network
+docker volume create gob-volume --opt device=/tmp --opt o=bind
+```
+### Message Broker and Databases
 
-A minimal configuration requires the
-**[workflow](https://github.com/Amsterdam/GOB-Workflow)**
-and
-**[upload](https://github.com/Amsterdam/GOB-Upload)**
-components.
+```bash
+# Message broker and databases
+cd GOB-Infra
+docker-compose up &
+cd ..
 
-A (small) **[import](https://github.com/Amsterdam/GOB-Import)**
-can be run to test the configuration.
+```
+
+For more information see the instructions in the GOB Infra project.
+
+## Quick start
+
+### Requirements
+
+You have installed the gob repositories and setup the shared network and storage.
+
+### startall.sh
+
+The startall.sh script in the scripts directory initializes and starts all required GOB components
+
+```bash
+cd GOB-Documentation/scripts
+bash startall.sh
+cd ../..
+
+```
+
+### e2e.sh
+
+After all components have started you can test if GOB is running correctly by using the e2e.sh script
+
+```bash
+cd GOB-Documentation/scripts
+bash e2e.sh
+cd ../..
 
 ## Branches
 
