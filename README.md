@@ -47,9 +47,11 @@ Follow the instructions in each project to build and start each project.
 
 ## Running GOB
 
+## Startup
+
 GOB requires an infrastructure with a:
+- Shared network and volume
 - Message Broker
-- Management Database
 - Database
 - Shared network and storage
 
@@ -96,8 +98,6 @@ After all components have started you can test if GOB is running correctly by us
 cd GOB-Documentation/scripts
 bash e2e.sh
 cd ../..
-
-```
 
 ## Branches
 
