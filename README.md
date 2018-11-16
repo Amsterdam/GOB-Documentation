@@ -60,8 +60,9 @@ docker volume create gob-volume --opt device=/tmp --opt o=bind
 
 ```bash
 # Message broker and databases
-cd gob/GOB-Infra
+cd GOB-Infra
 docker-compose up &
+cd ..
 
 ```
 
