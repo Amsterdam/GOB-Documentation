@@ -1,0 +1,2 @@
+10|3.4567|e|id 2|2020-10-22|{'type': 'Point', 'coordinates': [2.0, 3.0]}|True
+10|4.5678|f|id 3|2020-10-23|{'type': 'Point', 'coordinates': [3.0, 4.0]}|False
