@@ -4,7 +4,14 @@
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # List of all tests
-TESTS="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
+TEST_SIMPLE="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
+TEST_TYPES=""
+for TEST in NON_INTEGER NON_DECIMAL NON_CHARACTER NON_DATE NON_GEOMETRY NON_BOOLEAN MISSING; do
+    TEST_TYPES="${TEST_TYPES} DELETE_ALL ${TEST}"
+done
+
+# Concatenate tests
+TESTS="${TEST_SIMPLE} ${TEST_TYPES}"
 TESTS_DIR=data/test
 
 # Allow some time for processing the imports and exports
@@ -20,6 +27,7 @@ cd $SCRIPTDIR/../..
 
 echo Starting tests
 N_ERRORS=0
+ERRORS=""
 
 for TEST in ${TESTS}; do
 
@@ -43,6 +51,9 @@ for TEST in ${TESTS}; do
             echo Start export for test ${TEST}
             OUTPUT=/tmp/${TEST}.out
             EXPECT=${SCRIPTDIR}/${TEST}.expect
+            if [ ! -f ${EXPECT} ]; then
+                EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
+            fi
             python -m gobexport.start test_catalogue test_entity ${OUTPUT} File
             # Take some time to process the export
             sleep ${SLEEP}
@@ -52,11 +63,12 @@ for TEST in ${TESTS}; do
             cat ${OUTPUT}
             echo ========================
             if [ "$(cat ${OUTPUT})" = "$(cat ${EXPECT})" ]; then
-                echo "${GREEN}OK ${NC}"
+                echo "${GREEN}${TEST} OK ${NC}"
             else
-                echo "${RED}FAILED ${NC}, expected:"
+                echo "${RED}${TEST} FAILED ${NC}, expected:"
                 cat ${EXPECT}
                 N_ERRORS=$(expr ${N_ERRORS} + 1)
+                ERRORS="${ERRORS} ${TEST}"
             fi
             rm ${OUTPUT}
         cd ..
@@ -65,5 +77,5 @@ for TEST in ${TESTS}; do
 
 done
 
-echo "Test done, ${N_ERRORS} errors"
+echo "Test done, ${N_ERRORS} errors${RED}${ERRORS}${NC}"
 exit ${N_ERRORS}
