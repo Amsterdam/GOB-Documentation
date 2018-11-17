@@ -20,9 +20,7 @@ do
     GOB_REPO="GOB-${REPO}"
 
     # Check if all repositories exist
-    if [ -d ${GOB_REPO} ]; then
-        echo ${GREEN} ${GOB_REPO} ${NC}
-    else
+    if [ ! -d ${GOB_REPO} ]; then
         # Clone any missing repository
         echo ${RED} ${GOB_REPO} is missing, cloning...
         git clone git@github.com:Amsterdam/${GOB_REPO}.git ${NC}
@@ -30,6 +28,9 @@ do
 
     # Initialize each repository
     cd ${GOB_REPO}
+
+        BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
+        echo "${GREEN}${GOB_REPO} (${BRANCH})${NC}"
 
         if [ "$REPO" = "Management-Frontend" ]; then
             echo Running npm install
@@ -55,8 +56,13 @@ do
                 echo Install requirements
                 pip install -r requirements.txt > /dev/null
 
-                echo Run tests
+                echo -n "Run tests "
                 sh test.sh > /dev/null
+                if [ $? = 0 ]; then
+                    echo "${GREEN}OK${NC}"
+                else
+                    echo "${RED}FAILED!{NC}"
+                fi
 
             if [ "$REPO" != "Core" ]; then
                 cd ..
@@ -76,7 +82,7 @@ for REPO in $REPOS
 do
     GOB_REPO="GOB-${REPO}"
 
-    echo -n "${GREEN} Starting ${GOB_REPO}"
+    echo -n "${GREEN}Starting ${GOB_REPO}"
 
     # "Spin up" each repository
     cd ${GOB_REPO}
