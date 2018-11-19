@@ -27,8 +27,8 @@ do
     # Check if all repositories exist
     if [ ! -d ${GOB_REPO} ]; then
         # Clone any missing repository
-        echo ${RED} ${GOB_REPO} is missing, cloning...
-        git clone ${GIT_ACCESS}Amsterdam/${GOB_REPO}.git ${NC}
+        echo "${RED} ${GOB_REPO} is missing, cloning...${NC}"
+        git clone ${GIT_ACCESS}Amsterdam/${GOB_REPO}.git
     fi
 
     # Initialize each repository
