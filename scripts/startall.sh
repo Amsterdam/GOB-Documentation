@@ -7,6 +7,11 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 BASE_REPOS="Infra Core"
 REPOS="Workflow Import Upload API Export Management Management-Frontend"
 
+# Git access via HTTPS or SSH
+GIT_HTTPS="https://github.com/"
+GIT_GIT="git@github.com:"
+GIT_ACCESS=${GIT_HTTPS}
+
 # Color constants
 NC=$'\e[0m'
 RED=$'\e[31m'
@@ -23,7 +28,7 @@ do
     if [ ! -d ${GOB_REPO} ]; then
         # Clone any missing repository
         echo ${RED} ${GOB_REPO} is missing, cloning...
-        git clone git@github.com:Amsterdam/${GOB_REPO}.git ${NC}
+        git clone ${GIT_ACCESS}Amsterdam/${GOB_REPO}.git ${NC}
     fi
 
     # Initialize each repository
