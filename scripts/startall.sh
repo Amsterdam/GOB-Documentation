@@ -31,6 +31,11 @@ do
 
         BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
         echo "${GREEN}${GOB_REPO} (${BRANCH})${NC}"
+        if [ "${BRANCH}" = "develop" ] || [ "${BRANCH}" = "master" ]; then
+            # Auto update develop and master branches
+            git pull
+        fi
+        git fetch
 
         if [ "$REPO" = "Management-Frontend" ]; then
             echo Running npm install
@@ -52,6 +57,20 @@ do
             if [ "$REPO" != "Core" ]; then
                 cd src
             fi
+
+                CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+                if [ "$REPO" = "Core" ]; then
+                    CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
+                    echo "Version: ${CURRENT_CORE_VERSION}"
+                elif [ ! -z "${CORE_VERSION} " ]; then
+                    echo -n "Core version"
+                    if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
+                        echo -n "${GREEN}"
+                    else
+                        echo -n "${RED}"
+                    fi
+                    echo " ${CORE_VERSION} ${NC}"
+                fi
 
                 echo Install requirements
                 pip install -r requirements.txt > /dev/null
