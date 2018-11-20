@@ -85,7 +85,7 @@ do
                 if [ $? = 0 ]; then
                     echo "${GREEN}OK${NC}"
                 else
-                    echo "${RED}FAILED!{NC}"
+                    echo "${RED}FAILED!${NC}"
                 fi
 
             if [ "$REPO" != "Core" ]; then
@@ -117,6 +117,9 @@ do
             PID="$(pidof node)"
         else
             source venv/bin/activate
+            if [ -f .env ]; then
+                export $(cat .env | xargs)
+            fi
             cd src
                 PACKAGE=$(echo gob${REPO} | tr '[:upper:]' '[:lower:]')
                 python -m ${PACKAGE} > /dev/null  2>&1 &
