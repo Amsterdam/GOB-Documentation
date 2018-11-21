@@ -6,12 +6,16 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # List of all tests
 TEST_SIMPLE="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
 TEST_TYPES=""
-for TEST in NON_INTEGER NON_DECIMAL NON_CHARACTER NON_DATE NON_GEOMETRY NON_BOOLEAN MISSING; do
+for TEST in NON_INTEGER NON_DECIMAL NON_CHARACTER NON_DATE NON_GEOMETRY NON_BOOLEAN; do
     TEST_TYPES="${TEST_TYPES} DELETE_ALL ${TEST}"
 done
 
 # Concatenate tests
-TESTS="${TEST_SIMPLE} ${TEST_TYPES}"
+if [ -z "$1" ]; then
+    TESTS="${TEST_SIMPLE} ${TEST_TYPES}"
+else
+    TESTS="$@"
+fi
 TESTS_DIR=data/test
 
 # Allow some time for processing the imports and exports
