@@ -102,24 +102,29 @@ echo Basic setup completed
 echo Starting GOB...
 
 PIDS=""
+
+TMPDIR=$(mktemp -d)
+
 for REPO in $REPOS
 do
     GOB_REPO="GOB-${REPO}"
 
     echo -n "${GREEN}Starting ${GOB_REPO}"
 
+    OUT="${TMPDIR}/GOB_${REPO}.out.txt"
+
     # "Spin up" each repository
     cd ${GOB_REPO}
 
         if [ "$REPO" = "Management-Frontend" ]; then
-            (npm run serve > /dev/null 2>&1) &
+            (npm run serve > ${OUT} 2>&1) &
             sleep 2
             PID="$(pidof node)"
         else
             source venv/bin/activate
             cd src
                 PACKAGE=$(echo gob${REPO} | tr '[:upper:]' '[:lower:]')
-                python -m ${PACKAGE} > /dev/null  2>&1 &
+                python -m ${PACKAGE} > ${OUT}  2>&1 &
                 PID="$!"
             cd ..
             deactivate
@@ -134,3 +139,4 @@ do
 done
 
 echo GOB is active, PIDS: ${PIDS}
+echo Output can be found in ${TMPDIR}
