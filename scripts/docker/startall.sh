@@ -4,7 +4,7 @@ set -u # crash on missing env
 set -e # stop on any error
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 
 # List of all GOB repositories.
 BASE_REPOS="Infra Core"
@@ -64,9 +64,11 @@ do
                 echo -n "${RED}"
             fi
             echo " ${CORE_VERSION} ${NC}"
-            docker-compose -f src/.jenkins/test/docker-compose.yml build
-            docker-compose -f src/.jenkins/test/docker-compose.yml run test
-            docker-compose build
+            DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]')
+            docker stop ${DOCKER}
+            docker-compose -f src/.jenkins/test/docker-compose.yml build > /dev/null
+            docker-compose -f src/.jenkins/test/docker-compose.yml run test > /dev/null
+            docker-compose build > /dev/null
             docker-compose up &
         fi
 

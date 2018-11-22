@@ -1,0 +1,38 @@
+{
+    "_links": {
+        "next": {
+            "href": null
+        },
+        "previous": {
+            "href": null
+        },
+        "self": {
+            "href": "/gob/test_catalogue/test_entity/"
+        }
+    },
+    "pageSize": 100,
+    "pages": 1,
+    "results": [
+        {
+            "_links": {
+                "self": {
+                    "href": "/gob/test_catalogue/test_entity/id 1/"
+                }
+            },
+            "boolean": false,
+            "character": "b",
+            "date": "2001-02-01",
+            "decimal": 11.2,
+            "integer": 11,
+            "point": {
+                "coordinates": [
+                    11.2,
+                    12.3
+                ],
+                "type": "Point"
+            },
+            "string": "id 1"
+        }
+    ],
+    "totalCount": 1
+}
