@@ -21,6 +21,23 @@ cd $SCRIPTDIR/../../..
 TMPDIR=$(mktemp -d)
 PIDS=""
 
+echo "Stopping any running GOB dockers..."
+for REPO in ${REPOS}
+do
+    DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]')
+    if [ "$REPO" = "Management-Frontend" ]; then
+        PSLINES=$(ps -ef | grep -E "node.*vue-cli-service serve" | wc -l)
+        if [ $PSLINES -gt 1 ]; then
+            kill $(pidof node)
+        fi
+    else
+        docker stop ${DOCKER}
+    fi
+done
+# Stop any existing GOB infrastructure dockers
+docker stop rabbitmq storage management_database > /dev/null 2>&1
+
+echo "Starting GOB dockers..."
 for REPO in ${BASE_REPOS} ${REPOS}
 do
     GOB_REPO="GOB-${REPO}"
@@ -46,8 +63,6 @@ do
             PIDS="${PIDS} ${PID}"
         elif [ "$REPO" = "Infra" ]; then
             echo Starting GOB infrastructure
-            # Stop any existing GOB infrastructure dockers
-            docker stop rabbitmq storage management_database > /dev/null 2>&1
             # (Re-)start
             docker-compose up > /dev/null 2>&1 &
             sleep 1
@@ -64,8 +79,6 @@ do
                 echo -n "${RED}"
             fi
             echo " ${CORE_VERSION} ${NC}"
-            DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]')
-            docker stop ${DOCKER}
             docker-compose -f src/.jenkins/test/docker-compose.yml build > /dev/null
             docker-compose -f src/.jenkins/test/docker-compose.yml run test > /dev/null
             docker-compose build > /dev/null
@@ -76,4 +89,3 @@ do
 done
 
 echo GOB is active, PIDS: ${PIDS}
-echo Output can be found in ${TMPDIR}

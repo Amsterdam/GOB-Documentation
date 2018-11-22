@@ -10,49 +10,49 @@
             "href": "/gob/test_catalogue/test_entity/"
         }
     },
+    "totalCount": 2,
     "pageSize": 100,
     "pages": 1,
     "results": [
         {
+            "string": "id 1",
+            "character": "a",
+            "decimal": 1.2,
+            "integer": 1,
+            "point": {
+                "type": "Point",
+                "coordinates": [
+                    1.2,
+                    2.3
+                ]
+            },
+            "date": "2001-01-01",
+            "boolean": null,
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 1/"
                 }
-            },
-            "boolean": null,
+            }
+        },
+        {
+            "string": "id 2",
             "character": "a",
-            "date": "2001-01-01",
             "decimal": 1.2,
             "integer": 1,
             "point": {
+                "type": "Point",
                 "coordinates": [
                     1.2,
                     2.3
-                ],
-                "type": "Point"
+                ]
             },
-            "string": "id 1"
-        },
-        {
+            "date": "2001-01-01",
+            "boolean": true,
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 2/"
                 }
-            },
-            "boolean": true,
-            "character": "a",
-            "date": "2001-01-01",
-            "decimal": 1.2,
-            "integer": 1,
-            "point": {
-                "coordinates": [
-                    1.2,
-                    2.3
-                ],
-                "type": "Point"
-            },
-            "string": "id 2"
+            }
         }
-    ],
-    "totalCount": 2
+    ]
 }

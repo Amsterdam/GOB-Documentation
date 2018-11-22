@@ -19,7 +19,7 @@ fi
 TESTS_DIR=data/test
 
 # Allow some time for processing the imports and exports
-SLEEP=5
+SLEEP=8
 
 # Color constants
 NC=$'\e[0m'
@@ -49,13 +49,13 @@ for TEST in ${TESTS}; do
             EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
         fi
         curl ${API} | python -m json.tool > ${OUTPUT}
-        # Uncomment this line to redefine expectations
+        # Uncomment next two line to redefine expectations
         # echo "${RED}Taking current output as expected output.${NC}"
         # cp ${OUTPUT} ${EXPECT}
         echo ======== Result ========
         cat ${OUTPUT}
         echo ========================
-        if [ "$(cat ${OUTPUT})" = "$(cat ${EXPECT})" ]; then
+        if [ "$(jq -S . ${OUTPUT})" = "$(jq -S .  ${EXPECT})" ]; then
             echo "${GREEN}${TEST} OK ${NC}"
         else
             echo "${RED}${TEST} FAILED ${NC}, expected:"

@@ -10,8 +10,8 @@
             "href": "/gob/test_catalogue/test_entity/"
         }
     },
+    "totalCount": 0,
     "pageSize": 100,
     "pages": 0,
-    "results": [],
-    "totalCount": 0
+    "results": []
 }
