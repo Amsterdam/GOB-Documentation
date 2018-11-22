@@ -10,49 +10,49 @@
             "href": "/gob/test_catalogue/test_entity/"
         }
     },
+    "totalCount": 2,
     "pageSize": 100,
     "pages": 1,
     "results": [
         {
+            "string": "id 2",
+            "character": "e",
+            "decimal": 3.4567,
+            "integer": 10,
+            "point": {
+                "type": "Point",
+                "coordinates": [
+                    2.0,
+                    3.0
+                ]
+            },
+            "date": "2020-10-22",
+            "boolean": true,
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 2/"
                 }
-            },
-            "boolean": true,
-            "character": "e",
-            "date": "2020-10-22",
-            "decimal": 3.4567,
-            "integer": 10,
-            "point": {
-                "coordinates": [
-                    2.0,
-                    3.0
-                ],
-                "type": "Point"
-            },
-            "string": "id 2"
+            }
         },
         {
+            "string": "id 3",
+            "character": "f",
+            "decimal": 4.5678,
+            "integer": 10,
+            "point": {
+                "type": "Point",
+                "coordinates": [
+                    3.0,
+                    4.0
+                ]
+            },
+            "date": "2020-10-23",
+            "boolean": false,
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 3/"
                 }
-            },
-            "boolean": false,
-            "character": "f",
-            "date": "2020-10-23",
-            "decimal": 4.5678,
-            "integer": 10,
-            "point": {
-                "coordinates": [
-                    3.0,
-                    4.0
-                ],
-                "type": "Point"
-            },
-            "string": "id 3"
+            }
         }
-    ],
-    "totalCount": 2
+    ]
 }
