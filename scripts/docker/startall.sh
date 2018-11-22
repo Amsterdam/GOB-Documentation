@@ -16,7 +16,7 @@ RED=$'\e[31m'
 GREEN=$'\e[32m'
 
 # Change to GOB directory
-cd $SCRIPTDIR/../..
+cd $SCRIPTDIR/../../..
 
 TMPDIR=$(mktemp -d)
 PIDS=""
