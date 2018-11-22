@@ -1,0 +1,17 @@
+{
+    "_links": {
+        "next": {
+            "href": null
+        },
+        "previous": {
+            "href": null
+        },
+        "self": {
+            "href": "/gob/test_catalogue/test_entity/"
+        }
+    },
+    "pageSize": 100,
+    "pages": 0,
+    "results": [],
+    "totalCount": 0
+}
