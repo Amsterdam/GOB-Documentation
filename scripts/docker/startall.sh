@@ -94,6 +94,9 @@ init 2> /dev/null || true
 # Save docker output in $OUT
 OUT=/tmp/gob.out.txt
 
+# build "local" frontend docker
+export NPMSCRIPT=builddev
+
 # Start GOB dockers
 start
 
