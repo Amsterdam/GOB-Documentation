@@ -5,8 +5,6 @@ set -e # stop on any error
 # Start from directory where this script is located (GOB-Documentation/scripts)
 SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 
-jq --version
-
 # List of all tests
 TEST_SIMPLE="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
 TEST_TYPES=""
@@ -33,6 +31,8 @@ GREEN='\e[32m'
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
 
+SORT_JSON="python3 -m json.tool --sort-keys"
+
 echo Starting tests
 N_ERRORS=0
 ERRORS=""
@@ -46,20 +46,18 @@ for TEST in ${TESTS}; do
         # test is read from test.csv, copy test-csv to test.csv
         # Take some time to let GOB read the file
         sleep ${SLEEP}
-        echo Start export for test ${TEST}
+        echo Get API output for test ${TEST}
         OUTPUT=/tmp/${TEST}.out
         EXPECT=${SCRIPTDIR}/${TEST}.expect
         if [ ! -f ${EXPECT} ]; then
             EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
         fi
-        curl ${API} | python -m json.tool > ${OUTPUT}
+        EXPECT_JSON=$(cat ${EXPECT} | ${SORT_JSON})
+        OUTPUT_JSON=$(curl ${API} 2>/dev/null | ${SORT_JSON})
         # Uncomment next two line to redefine expectations
         # echo "${RED}Taking current output as expected output.${NC}"
-        # cp ${OUTPUT} ${EXPECT}
-        echo ======== Result ========
-        cat ${OUTPUT}
-        echo ========================
-        if [ "$(jq -S . ${OUTPUT})" = "$(jq -S .  ${EXPECT})" ]; then
+        # echo ${OUTPUT_JSON} > ${EXPECT}
+        if [ "${OUTPUT_JSON}" = "${EXPECT_JSON}" ]; then
             echo "${GREEN}${TEST} OK ${NC}"
         else
             echo "${RED}${TEST} FAILED ${NC}, expected:"
@@ -67,7 +65,6 @@ for TEST in ${TESTS}; do
             N_ERRORS=$(expr ${N_ERRORS} + 1)
             ERRORS="${ERRORS} ${TEST}"
         fi
-        rm ${OUTPUT}
     cd ..
 
 done
