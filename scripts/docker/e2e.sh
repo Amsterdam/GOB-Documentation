@@ -1,7 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -e # stop on any error
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
-SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
+
+jq --version
 
 # List of all tests
 TEST_SIMPLE="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
@@ -22,12 +26,12 @@ TESTS_DIR=data/test
 SLEEP=8
 
 # Color constants
-NC=$'\e[0m'
-RED=$'\e[31m'
-GREEN=$'\e[32m'
+NC='\e[0m'
+RED='\e[31m'
+GREEN='\e[32m'
 
 # Change to GOB directory
-cd $SCRIPTDIR/../..
+cd $SCRIPTDIR/../../..
 
 echo Starting tests
 N_ERRORS=0
