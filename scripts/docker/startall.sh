@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -u # crash on missing env
 set -e # stop on any error
@@ -10,82 +10,91 @@ SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 BASE_REPOS="Infra Core"
 REPOS="Workflow Import Upload API Export Management Management-Frontend"
 
+# GOB Infrastructure dockers
+INFRA="rabbitmq storage management_database"
+
 # Color constants
-NC=$'\e[0m'
-RED=$'\e[31m'
-GREEN=$'\e[32m'
+NC='\e[0m'
+RED='\e[31m'
+GREEN='\e[32m'
 
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
 
-TMPDIR=$(mktemp -d)
-PIDS=""
+stop_docker () {
+    DOCKER=$1
+    docker stop ${DOCKER}
+    # docker rm ${DOCKER}
+}
 
-echo "Stopping any running GOB dockers..."
-for REPO in ${REPOS}
-do
-    DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]')
-    if [ "$REPO" = "Management-Frontend" ]; then
-        PSLINES=$(ps -ef | grep -E "node.*vue-cli-service serve" | wc -l)
-        if [ $PSLINES -gt 1 ]; then
-            kill $(pidof node)
-        fi
-    else
-        docker stop ${DOCKER}
-    fi
-done
-# Stop any existing GOB infrastructure dockers
-docker stop rabbitmq storage management_database > /dev/null 2>&1
+init () {
+    # Stop any running GOB dockers
+    for REPO in ${REPOS}
+    do
+        echo "Stopping docker GOB ${REPO}"
+        DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+        stop_docker $DOCKER > /dev/null
+    done
 
-echo "Starting GOB dockers..."
-for REPO in ${BASE_REPOS} ${REPOS}
-do
-    GOB_REPO="GOB-${REPO}"
-    OUT="${TMPDIR}/${GOB_REPO}.out.txt"
+    for DOCKER in ${INFRA}
+    do
+        echo "Stopping docker GOB ${DOCKER}"
+        stop_docker $DOCKER > /dev/null
+    done
 
-    # Initialize each repository
-    cd ${GOB_REPO}
+    echo "Creating network gob-network"
+    docker network create gob-network
 
-        BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
-        echo "${GREEN}${GOB_REPO} (${BRANCH})${NC}"
-        if [ "${BRANCH}" = "develop" ] || [ "${BRANCH}" = "master" ]; then
-            # Auto update develop and master branches
-            git pull
-        fi
-        git fetch
+    echo "Creating volume gob-volume"
+    docker volume create gob-volume --opt device=/tmp --opt o=bind > /dev/null
+}
 
-        if [ "$REPO" = "Management-Frontend" ]; then
-            echo Running npm install
-            npm install > /dev/null
-            (npm run serve > ${OUT} 2>&1) &
-            sleep 2
-            PID="$(pidof node)"
-            PIDS="${PIDS} ${PID}"
-        elif [ "$REPO" = "Infra" ]; then
-            echo Starting GOB infrastructure
-            # (Re-)start
-            docker-compose up > /dev/null 2>&1 &
-            sleep 1
-        elif [ "$REPO" = "Core" ]; then
-            CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-            CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
-            echo "Version: ${CURRENT_CORE_VERSION}"
-        else
-            CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-            echo -n "Core version"
-            if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
-                echo -n "${GREEN}"
+start () {
+    for REPO in ${BASE_REPOS} ${REPOS}
+    do
+        echo "${GREEN}${REPO}${NC}"
+
+        GOB_REPO="GOB-${REPO}"
+
+        # Initialize each repository
+        cd ${GOB_REPO}
+
+            if [ "$REPO" = "Infra" ]; then
+                echo "Starting GOB infrastructure"
+                docker-compose up > ${OUT}  2>&1 &
+                # Allow some time to start the infrastructure
+                sleep 10
+            elif [ "$REPO" = "Core" ]; then
+                CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+                CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
+                echo "GOB Core Version: ${CURRENT_CORE_VERSION}"
             else
-                echo -n "${RED}"
+                echo "Starting docker GOB ${REPO}"
+                CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+                echo -n "Core version"
+                if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
+                    echo -n "${GREEN}"
+                else
+                    echo -n "${RED}"
+                fi
+                echo " ${CORE_VERSION} ${NC}"
+                echo "Building ${REPO} docker"
+                docker-compose build > /dev/null
+                echo "Starting ${REPO} docker"
+                docker-compose up >> ${OUT} 2>&1 &
             fi
-            echo " ${CORE_VERSION} ${NC}"
-            docker-compose -f src/.jenkins/test/docker-compose.yml build > /dev/null
-            docker-compose -f src/.jenkins/test/docker-compose.yml run test > /dev/null
-            docker-compose build > /dev/null
-            docker-compose up &
-        fi
 
-    cd ..
-done
+        cd ..
+    done
+}
 
-echo GOB is active, PIDS: ${PIDS}
+# Initialize GOB, ignore errors
+init 2> /dev/null || true
+
+# Save docker output in $OUT
+OUT=/tmp/gob.out.txt
+
+# Start GOB dockers
+start
+
+echo "${GREEN}GOB started, output in ${OUT}${NC}"
