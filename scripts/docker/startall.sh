@@ -27,6 +27,19 @@ stop_docker () {
     # docker rm ${DOCKER}
 }
 
+start_infra () {
+    SERVICE=$1
+    WAIT_FOR=$2
+    TEMPFILE=$(mktemp /tmp/start_infra.XXXXXX)
+    echo -n "Starting ${SERVICE}"
+    (docker-compose up $1 | tee $TEMPFILE) >> ${OUT} 2>&1 &
+    until grep "$WAIT_FOR" $TEMPFILE; do
+        echo -n "."
+        sleep 1
+    done
+    rm -rf $TEMPFILE
+}
+
 init () {
     # Stop any running GOB dockers
     for REPO in ${REPOS}
@@ -61,9 +74,10 @@ start () {
 
             if [ "$REPO" = "Infra" ]; then
                 echo "Starting GOB infrastructure"
-                docker-compose up > ${OUT}  2>&1 &
-                # Allow some time to start the infrastructure
-                sleep 10
+                for SERVICE in database management_database; do
+                    start_infra $SERVICE "database system is ready to accept connections"
+                done
+                start_infra rabbitmq "Server startup complete"
             elif [ "$REPO" = "Core" ]; then
                 CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
                 CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
@@ -93,6 +107,9 @@ init 2> /dev/null || true
 
 # Save docker output in $OUT
 OUT=/tmp/gob.out.txt
+if [ -f "${OUT}" ]; then
+    rm ${OUT}
+fi
 
 # build "local" frontend docker
 export NPMSCRIPT=builddev
@@ -100,4 +117,6 @@ export NPMSCRIPT=builddev
 # Start GOB dockers
 start
 
-echo "${GREEN}GOB started, output in ${OUT}${NC}"
+sleep 10
+NDOCKERS=$(docker ps --format "{{.Names}}" | grep -e "^gob" | wc -l)
+echo "${GREEN}GOB containers (${NDOCKERS}) started, output in ${OUT}${NC}"
