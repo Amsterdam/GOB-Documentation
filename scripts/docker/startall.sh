@@ -14,9 +14,9 @@ REPOS="Workflow Import Upload API Export Management Management-Frontend"
 INFRA="rabbitmq storage management_database"
 
 # Color constants
-NC='\e[0m'
-RED='\e[31m'
-GREEN='\e[32m'
+NC=$'\e[0m'
+RED=$'\e[31m'
+GREEN=$'\e[32m'
 
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
