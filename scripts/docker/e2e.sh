@@ -24,9 +24,9 @@ TESTS_DIR=data/test
 SLEEP=8
 
 # Color constants
-NC='\e[0m'
-RED='\e[31m'
-GREEN='\e[32m'
+NC=$'\e[0m'
+RED=$'\e[31m'
+GREEN=$'\e[32m'
 
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
