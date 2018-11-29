@@ -43,6 +43,7 @@ for TEST in ${TESTS}; do
     cd GOB-Import
         echo Start import for test ${TEST}
         docker exec gobimport sh data/test/run_test.sh ${TEST}
+        docker exec gobworkflow python -m gobworkflow.start import data/test/test.json
         # test is read from test.csv, copy test-csv to test.csv
         # Take some time to let GOB read the file
         sleep ${SLEEP}
