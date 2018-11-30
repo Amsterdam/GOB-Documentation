@@ -2,7 +2,7 @@
 
 GOB overall project documentation
 
-## Local Development
+## Environment
 
 The preferred way to work on GOB is to have all GOB projects in a separate GOB directory.
 Within this directory the GOB projects can be instantiated.
@@ -43,19 +43,45 @@ git clone https://github.com/Amsterdam/GOB-Management-Frontend.git
 
 ```
 
-Follow the instructions in each project to build and start each project.
+## Quick start
 
-## Running GOB
+### Requirements
+
+* docker-compose >= 1.17
+* docker ce >= 18.03
+
+### startall.sh
+
+The startall.sh script in the scripts directory initializes and starts all required GOB components
+
+```bash
+cd GOB-Documentation/scripts/docker
+bash startall.sh
+cd ../..
+
+```
+
+### e2e.sh
+
+After all components have started you can test if GOB is running correctly by using the e2e.sh script
+
+```bash
+cd GOB-Documentation/scripts/docker
+bash e2e.sh
+cd ../..
+```
+
+## Local Development
+
+Follow the instructions in each project to build and start each project.
 
 ## Startup
 
 GOB requires an infrastructure with a:
-- Shared network and volume
-- Message Broker
-- Database
-- Shared network and storage
+- Shared Network and Shared Volume
+- Message Broker and Databases
 
-### Shared network and storage
+### Shared Network and Shared Volume
 
 ```bash
 docker network create gob-network
@@ -72,32 +98,6 @@ cd ..
 ```
 
 For more information see the instructions in the GOB Infra project.
-
-## Quick start
-
-### Requirements
-
-You have installed the gob repositories and setup the shared network and storage.
-
-### startall.sh
-
-The startall.sh script in the scripts directory initializes and starts all required GOB components
-
-```bash
-cd GOB-Documentation/scripts
-bash startall.sh
-cd ../..
-
-```
-
-### e2e.sh
-
-After all components have started you can test if GOB is running correctly by using the e2e.sh script
-
-```bash
-cd GOB-Documentation/scripts
-bash e2e.sh
-cd ../..
 
 ## Branches
 
