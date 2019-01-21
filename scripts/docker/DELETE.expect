@@ -28,6 +28,7 @@
             },
             "date": "2020-10-22",
             "boolean": true,
+            "json": {},
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 2/"
@@ -48,6 +49,7 @@
             },
             "date": "2020-10-23",
             "boolean": false,
+            "json": {},
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 3/"
