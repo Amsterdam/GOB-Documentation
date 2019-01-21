@@ -65,6 +65,8 @@ for TEST in ${TESTS}; do
             cat ${EXPECT}
             N_ERRORS=$(expr ${N_ERRORS} + 1)
             ERRORS="${ERRORS} ${TEST}"
+            echo "-----"
+            echo ${OUTPUT_JSON}
         fi
     cd ..
 
