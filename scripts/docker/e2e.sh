@@ -8,7 +8,7 @@ SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 # List of all tests
 TEST_SIMPLE="DELETE_ALL ADD ADD DELETE_ALL ADD MODIFY DELETE DELETE_ALL"
 TEST_TYPES=""
-for TEST in NON_INTEGER NON_DECIMAL NON_CHARACTER NON_DATE NON_GEOMETRY NON_BOOLEAN; do
+for TEST in NON_INTEGER NON_DECIMAL NON_CHARACTER NON_DATE NON_GEOMETRY NON_BOOLEAN NON_JSON; do
     TEST_TYPES="${TEST_TYPES} DELETE_ALL ${TEST}"
 done
 
@@ -63,6 +63,7 @@ for TEST in ${TESTS}; do
         else
             echo "${RED}${TEST} FAILED ${NC}, expected:"
             cat ${EXPECT}
+            echo ${OUTPUT_JSON}
             N_ERRORS=$(expr ${N_ERRORS} + 1)
             ERRORS="${ERRORS} ${TEST}"
         fi
