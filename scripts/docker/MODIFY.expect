@@ -10,30 +10,65 @@
             "href": "/gob/test_catalogue/test_entity/"
         }
     },
-    "totalCount": 1,
     "pageSize": 100,
     "pages": 1,
     "results": [
         {
-            "string": "id 1",
-            "character": "b",
-            "decimal": 11.2,
-            "integer": 11,
-            "point": {
-                "type": "Point",
-                "coordinates": [
-                    11.2,
-                    12.3
-                ]
+            "_embedded": {
+                "manyreference": null,
+                "reference": null
             },
-            "date": "2001-02-01",
-            "boolean": false,
-            "json": {},
             "_links": {
                 "self": {
                     "href": "/gob/test_catalogue/test_entity/id 1/"
                 }
-            }
+            },
+            "boolean": false,
+            "character": "b",
+            "date": "2001-02-01",
+            "datetime": "2019-01-22T14:35:30.025457",
+            "decimal": 11.2,
+            "geometry": {
+                "coordinates": [
+                    3.0,
+                    3.0
+                ],
+                "type": "Point"
+            },
+            "integer": 11,
+            "json": {},
+            "point": {
+                "coordinates": [
+                    11.2,
+                    12.3
+                ],
+                "type": "Point"
+            },
+            "polygon": {
+                "coordinates": [
+                    [
+                        [
+                            1.0,
+                            1.0
+                        ],
+                        [
+                            1.0,
+                            1.0
+                        ],
+                        [
+                            1.0,
+                            1.0
+                        ],
+                        [
+                            1.0,
+                            1.0
+                        ]
+                    ]
+                ],
+                "type": "Polygon"
+            },
+            "string": "id 1"
         }
-    ]
+    ],
+    "totalCount": 1
 }
