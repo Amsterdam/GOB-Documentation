@@ -16,7 +16,15 @@
         {
             "_embedded": {
                 "manyreference": null,
-                "reference": null
+                "reference": {
+                    "_links": {
+                        "self": {
+                            "href": "/gob/test_catalogue/test_entity_ref/{}/"
+                        }
+                    },
+                    "bronwaarde": "id 1",
+                    "id": "{}"
+                }
             },
             "_links": {
                 "self": {

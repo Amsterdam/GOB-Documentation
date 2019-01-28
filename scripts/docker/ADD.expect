@@ -16,7 +16,15 @@
         {
             "_embedded": {
                 "manyreference": null,
-                "reference": null
+                "reference": {
+                    "_links": {
+                        "self": {
+                            "href": "/gob/test_catalogue/test_entity_ref/{}/"
+                        }
+                    },
+                    "bronwaarde": "id 1",
+                    "id": "{}"
+                }
             },
             "_links": {
                 "self": {
@@ -77,7 +85,80 @@
                 "type": "Polygon"
             },
             "string": "id 1"
+        },
+        {
+            "_embedded": {
+                "manyreference": null,
+                "reference": {
+                    "_links": {
+                        "self": {
+                            "href": "/gob/test_catalogue/test_entity_ref/id 1/"
+                        }
+                    },
+                    "bronwaarde": "id 2",
+                    "id": "id 1"
+                }
+            },
+            "_links": {
+                "self": {
+                    "href": "/gob/test_catalogue/test_entity/id 2/"
+                }
+            },
+            "boolean": true,
+            "character": "a",
+            "date": "2001-01-01",
+            "datetime": "2019-01-22T14:35:30.025457",
+            "decimal": 1.2,
+            "geometry": {
+                "coordinates": [
+                    1.0,
+                    2.0
+                ],
+                "type": "Point"
+            },
+            "integer": 1,
+            "json": {
+                "array": [
+                    1,
+                    2,
+                    3
+                ],
+                "bool": true,
+                "null": null,
+                "str": "a"
+            },
+            "point": {
+                "coordinates": [
+                    1.2,
+                    2.3
+                ],
+                "type": "Point"
+            },
+            "polygon": {
+                "coordinates": [
+                    [
+                        [
+                            51.0,
+                            3.0
+                        ],
+                        [
+                            51.3,
+                            3.61
+                        ],
+                        [
+                            51.3,
+                            3.0
+                        ],
+                        [
+                            51.0,
+                            3.0
+                        ]
+                    ]
+                ],
+                "type": "Polygon"
+            },
+            "string": "id 2"
         }
     ],
-    "totalCount": 1
+    "totalCount": 2
 }
