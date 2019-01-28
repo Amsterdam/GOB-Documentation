@@ -16,11 +16,19 @@
         {
             "_embedded": {
                 "manyreference": null,
-                "reference": null
+                "reference": {
+                    "_links": {
+                        "self": {
+                            "href": "/gob/test_catalogue/test_entity_ref/id 1/"
+                        }
+                    },
+                    "bronwaarde": "id 1",
+                    "id": "id 1"
+                }
             },
             "_links": {
                 "self": {
-                    "href": "/gob/test_catalogue/test_entity/None/"
+                    "href": "/gob/test_catalogue/test_entity/id 1/"
                 }
             },
             "boolean": true,
@@ -67,7 +75,7 @@
                 ],
                 "type": "Polygon"
             },
-            "string": null
+            "string": "id 1"
         }
     ],
     "totalCount": 1
