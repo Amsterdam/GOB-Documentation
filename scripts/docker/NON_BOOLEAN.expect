@@ -22,8 +22,8 @@
                             "href": "/gob/test_catalogue/test_entity_ref/id/"
                         }
                     },
-                    "bronwaarde": "id 1",
-                    "id": "id"
+                    "bronwaarde": "id",
+                    "identificatie": "id"
                 }
             },
             "_links": {
@@ -95,8 +95,8 @@
                             "href": "/gob/test_catalogue/test_entity_ref/id 1/"
                         }
                     },
-                    "bronwaarde": "id 2",
-                    "id": "id 1"
+                    "bronwaarde": "id 1",
+                    "identificatie": "id 1"
                 }
             },
             "_links": {

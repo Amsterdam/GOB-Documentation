@@ -19,11 +19,11 @@
                 "reference": {
                     "_links": {
                         "self": {
-                            "href": "/gob/test_catalogue/test_entity_ref/{}/"
+                            "href": "/gob/test_catalogue/test_entity_ref/id 1/"
                         }
                     },
                     "bronwaarde": "id 1",
-                    "id": "{}"
+                    "identificatie": "id 1"
                 }
             },
             "_links": {

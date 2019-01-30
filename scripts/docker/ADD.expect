@@ -19,11 +19,11 @@
                 "reference": {
                     "_links": {
                         "self": {
-                            "href": "/gob/test_catalogue/test_entity_ref/{}/"
+                            "href": "/gob/test_catalogue/test_entity_ref/refid 1/"
                         }
                     },
-                    "bronwaarde": "id 1",
-                    "id": "{}"
+                    "bronwaarde": "refid 1",
+                    "identificatie": "refid 1"
                 }
             },
             "_links": {
@@ -92,11 +92,11 @@
                 "reference": {
                     "_links": {
                         "self": {
-                            "href": "/gob/test_catalogue/test_entity_ref/id 1/"
+                            "href": "/gob/test_catalogue/test_entity_ref/refid 2/"
                         }
                     },
-                    "bronwaarde": "id 2",
-                    "id": "id 1"
+                    "bronwaarde": "refid 2",
+                    "identificatie": "refid 2"
                 }
             },
             "_links": {

@@ -23,7 +23,7 @@
                         }
                     },
                     "bronwaarde": "id 2",
-                    "id": "id 2"
+                    "identificatie": "id 2"
                 }
             },
             "_links": {
@@ -87,7 +87,7 @@
                         }
                     },
                     "bronwaarde": "id 3",
-                    "id": "id 3"
+                    "identificatie": "id 3"
                 }
             },
             "_links": {
