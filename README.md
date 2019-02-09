@@ -63,6 +63,10 @@ cd ../..
 
 ### e2e.sh
 
+#### Requirements
+
+* curl >= 7.0
+
 After all components have started you can test if GOB is running correctly by using the e2e.sh script
 
 ```bash
