@@ -31,9 +31,6 @@ NC=$'\e[0m'
 RED=$'\e[31m'
 GREEN=$'\e[32m'
 
-# Change to GOB directory
-cd $SCRIPTDIR/../../..
-
 SORT_JSON="python3 -m json.tool --sort-keys"
 
 echo Starting tests
@@ -43,35 +40,33 @@ ERRORS=""
 API="http://localhost:8141/gob/test_catalogue/test_entity/"
 for TEST in ${TESTS}; do
 
-    cd GOB-Import
-        echo Start import for test ${TEST}
-        docker exec gobimport sh data/test/run_test.sh ${TEST}
-        docker exec gobworkflow python -m gobworkflow.start import data/test/test.json
-        # test is read from test.csv, copy test-csv to test.csv
-        # Take some time to let GOB read the file
-        sleep ${SLEEP}
-        echo Get API output for test ${TEST}
-        OUTPUT=/tmp/${TEST}.out
-        EXPECT=${SCRIPTDIR}/${TEST}.expect
-        if [ ! -f ${EXPECT} ]; then
-            EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
-        fi
-        EXPECT_JSON=$(cat ${EXPECT} | ${SORT_JSON})
-        OUTPUT_JSON=$(curl ${API} 2>/dev/null | ${SORT_JSON})
-        # Uncomment next two line to redefine expectations
-        # echo "${RED}Taking current output as expected output.${NC}"
-        # echo ${OUTPUT_JSON} > ${EXPECT}
-        if [ "${OUTPUT_JSON}" = "${EXPECT_JSON}" ]; then
+    echo Start import for test ${TEST}
+    docker exec gobimport sh data/test/run_test.sh ${TEST}
+    docker exec gobworkflow python -m gobworkflow.start import data/test/test.json
+    # test is read from test.csv, copy test-csv to test.csv
+    # Take some time to let GOB read the file
+    sleep ${SLEEP}
+    echo Get API output for test ${TEST}
+    OUTPUT=/tmp/${TEST}.out
+    EXPECT=${SCRIPTDIR}/${TEST}.expect
+    if [ ! -f ${EXPECT} ]; then
+        EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
+    fi
+    EXPECT_JSON=$(cat ${EXPECT} | ${SORT_JSON})
+    OUTPUT_JSON=$(curl ${API} 2>/dev/null | ${SORT_JSON})
+    # Uncomment next two line to redefine expectations
+    # echo "${RED}Taking current output as expected output.${NC}"
+    # echo ${OUTPUT_JSON} > ${EXPECT}
+    if [ "${OUTPUT_JSON}" = "${EXPECT_JSON}" ]; then
 
-            echo "${GREEN}${TEST} OK ${NC}"
-        else
-            echo "${RED}${TEST} FAILED ${NC}, expected:"
-            cat ${EXPECT}
-            echo ${OUTPUT_JSON}
-            N_ERRORS=$(expr ${N_ERRORS} + 1)
-            ERRORS="${ERRORS} ${TEST}"
-        fi
-    cd ..
+        echo "${GREEN}${TEST} OK ${NC}"
+    else
+        echo "${RED}${TEST} FAILED ${NC}, expected:"
+        cat ${EXPECT}
+        echo ${OUTPUT_JSON}
+        N_ERRORS=$(expr ${N_ERRORS} + 1)
+        ERRORS="${ERRORS} ${TEST}"
+    fi
 
 done
 
