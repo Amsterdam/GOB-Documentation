@@ -47,7 +47,6 @@ for TEST in ${TESTS}; do
     # Take some time to let GOB read the file
     sleep ${SLEEP}
     echo Get API output for test ${TEST}
-    OUTPUT=/tmp/${TEST}.out
     EXPECT=${SCRIPTDIR}/${TEST}.expect
     if [ ! -f ${EXPECT} ]; then
         EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
@@ -58,12 +57,10 @@ for TEST in ${TESTS}; do
     # echo "${RED}Taking current output as expected output.${NC}"
     # echo ${OUTPUT_JSON} > ${EXPECT}
     if [ "${OUTPUT_JSON}" = "${EXPECT_JSON}" ]; then
-
         echo "${GREEN}${TEST} OK ${NC}"
     else
-        echo "${RED}${TEST} FAILED ${NC}, expected:"
-        cat ${EXPECT}
-        echo ${OUTPUT_JSON}
+        echo "${RED}${TEST} FAILED ${NC}, output:"
+        curl ${API} | json_pp
         N_ERRORS=$(expr ${N_ERRORS} + 1)
         ERRORS="${ERRORS} ${TEST}"
     fi
