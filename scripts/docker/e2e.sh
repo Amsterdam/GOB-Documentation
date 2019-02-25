@@ -24,7 +24,7 @@ fi
 TESTS_DIR=data/test
 
 # Allow some time for processing the imports and exports
-SLEEP=8
+SLEEP=15
 
 # Color constants
 NC=$'\e[0m'
