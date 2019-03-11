@@ -60,6 +60,10 @@ init () {
 
     echo "Creating volume gob-volume"
     docker volume create gob-volume --opt device=/tmp --opt o=bind > /dev/null
+
+    echo "Clear message broker directory"
+    rm -rf /tmp/message_broker
+    mkdir /tmp/message_broker -m 777
 }
 
 start () {
