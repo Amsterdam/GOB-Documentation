@@ -63,7 +63,19 @@ init () {
 
     echo "Clear message broker directory"
     rm -rf /tmp/message_broker
-    mkdir /tmp/message_broker -m 777
+    mkdir -m 777 /tmp/message_broker
+
+    echo "Init .env for import and export"
+    for REPO in Import Export
+    do
+        cd "GOB-${REPO}"
+        if [ ! -f .env ]
+        then
+            echo "Create empty credentials file (.env) for ${REPO}"
+            cp .env.example .env
+        fi
+        cd -
+    done
 }
 
 start () {
