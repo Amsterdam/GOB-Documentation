@@ -23,7 +23,7 @@
                         }
                     },
                     "bronwaarde": "refid 2",
-                    "identificatie": "refid 2"
+                    "_id": "refid 2"
                 }
             },
             "_links": {
@@ -87,7 +87,7 @@
                         }
                     },
                     "bronwaarde": "refid 3",
-                    "identificatie": "refid 3"
+                    "_id": "refid 3"
                 }
             },
             "_links": {

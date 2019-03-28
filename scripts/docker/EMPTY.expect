@@ -23,7 +23,7 @@
                         }
                     },
                     "bronwaarde": "id 1",
-                    "identificatie": "id 1"
+                    "_id": "id 1"
                 }
             },
             "_links": {
