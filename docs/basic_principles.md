@@ -36,7 +36,7 @@ and version control systems.
 
 Data that is processed by GOB is structured data.
 
-The definition of the data is registered in the GOB-Core repository (gobcode/model).
+The definition of the data is registered in the GOB-Core repository (gobcore/model).
 This is a simple json file that describes which catalogs and collections are handled by GOB.
 
 The model is a direct representation of Stelselpedia (https://www.amsterdam.nl/stelselpedia/)
