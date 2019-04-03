@@ -5,7 +5,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
 # List of all GOB repositories.
 BASE_REPOS="Infra Core"
-REPOS="Workflow Import Upload API Export Management Management-Frontend"
+REPOS="Workflow Import Prepare Upload API Export Management Management-Frontend"
 
 # Git access via HTTPS or SSH
 GIT_HTTPS="https://github.com/"
