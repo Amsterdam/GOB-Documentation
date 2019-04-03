@@ -23,6 +23,9 @@ git clone https://github.com/Amsterdam/GOB-Core.git
 # GOB Workflow (the workflow router)
 git clone https://github.com/Amsterdam/GOB-Workflow.git
 
+# GOB Prepare (preparation of data before import)
+git clone https://github.com/Amsterdam/GOB-Prepare.git
+
 # GOB Import (the import of the GOB sources)
 git clone https://github.com/Amsterdam/GOB-Import.git
 
