@@ -31,8 +31,6 @@ NC=$'\e[0m'
 RED=$'\e[31m'
 GREEN=$'\e[32m'
 
-SORT_JSON="python3 -m json.tool --sort-keys"
-
 echo Starting tests
 N_ERRORS=0
 ERRORS=""
@@ -51,8 +49,8 @@ for TEST in ${TESTS}; do
     if [ ! -f ${EXPECT} ]; then
         EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
     fi
-    EXPECT_JSON=$(cat ${EXPECT} | ${SORT_JSON})
-    OUTPUT_JSON=$(curl ${API} 2>/dev/null | ${SORT_JSON})
+    EXPECT_JSON=$(cat $EXPECT             | json_pp | sed 's/\s\|,//g' | sort)
+    OUTPUT_JSON=$(curl ${API} 2>/dev/null | json_pp | sed 's/\s\|,//g' | sort)
     # Uncomment next two line to redefine expectations
     # echo "${RED}Taking current output as expected output.${NC}"
     # echo ${OUTPUT_JSON} > ${EXPECT}
