@@ -65,13 +65,13 @@ init () {
     rm -rf /tmp/message_broker
     mkdir -m 777 /tmp/message_broker
 
-    echo "Init .env for import and export"
-    for REPO in Import Export
+    echo "Init .env for relevant projects"
+    for REPO_DIR in $(find ./ -name ".env.example" -maxdepth 2 -type f | xargs -I{} dirname {})
     do
-        cd "GOB-${REPO}"
+        cd $REPO_DIR
         if [ ! -f .env ]
         then
-            echo "Create empty credentials file (.env) for ${REPO}"
+            echo "Create empty credentials file (.env) for ${REPO_DIR}"
             cp .env.example .env
         fi
         cd -
