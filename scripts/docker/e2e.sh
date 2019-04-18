@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e # stop on any error
+source bash.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
 SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
@@ -23,46 +24,48 @@ else
 fi
 TESTS_DIR=data/test
 
-# Allow some time for processing the imports and exports
-SLEEP=15
-
-# Color constants
-NC=$'\e[0m'
-RED=$'\e[31m'
-GREEN=$'\e[32m'
-
 echo Starting tests
 N_ERRORS=0
 ERRORS=""
 
 API="http://localhost:8141/gob/test_catalogue/test_entity/"
-for TEST in ${TESTS}; do
 
+get_completed(){
+    expr $(grep -e "\(UPDATE]\s\+Update completed\|Import has failed\)" ${OUT}  | wc -l) + 1
+}
+
+for TEST in ${TESTS}; do
+    stime=$SECONDS
+    completed=$( get_completed || expr 0)
     echo Start import for test ${TEST}
     docker exec gobimport sh data/test/run_test.sh ${TEST}
     docker exec gobworkflow python -m gobworkflow.start import data/test/test.json
     # test is read from test.csv, copy test-csv to test.csv
     # Take some time to let GOB read the file
-    sleep ${SLEEP}
     echo Get API output for test ${TEST}
     EXPECT=${SCRIPTDIR}/${TEST}.expect
     if [ ! -f ${EXPECT} ]; then
         EXPECT="${SCRIPTDIR}/DELETE_ALL.expect"
     fi
-    EXPECT_JSON=$(cat $EXPECT             | json_pp | sed 's/\s\|,//g' | sort)
-    OUTPUT_JSON=$(curl ${API} 2>/dev/null | json_pp | sed 's/\s\|,//g' | sort)
+    while [[ $(get_completed) != $(expr ${completed} + 1) ]]; do
+        echo "Waiting for update complete..."
+        sleep 0.5
+    done
+    echo "Verifying update via API"
+    ERROR=$(cat $EXPECT | python3 client.py $API)
+
     # Uncomment next two line to redefine expectations
     # echo "${RED}Taking current output as expected output.${NC}"
-    # echo ${OUTPUT_JSON} > ${EXPECT}
-    if [ "${OUTPUT_JSON}" = "${EXPECT_JSON}" ]; then
-        echo "${GREEN}${TEST} OK ${NC}"
+    # echo ${OUTPUT} > ${EXPECT}
+    time_verb="(finished in $(($SECONDS - $stime)) seconds)"
+    if [ -z "$ERROR" ]; then
+        echo "${GREEN}${TEST} OK ${NC} ${time_verb}"
     else
-        echo "${RED}${TEST} FAILED ${NC}, output:"
-        curl ${API} | json_pp
+        echo "${RED}${TEST} FAILED ${NC} ${time_verb}, output:"
+        echo "${ERROR}"
         N_ERRORS=$(expr ${N_ERRORS} + 1)
         ERRORS="${ERRORS} ${TEST}"
     fi
-
 done
 
 echo "Test done, ${N_ERRORS} errors${RED}${ERRORS}${NC}"
