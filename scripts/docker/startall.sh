@@ -2,6 +2,7 @@
 
 set -u # crash on missing env
 set -e # stop on any error
+source bash.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
 SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
@@ -122,7 +123,6 @@ start () {
 init 2> /dev/null || true
 
 # Save docker output in $OUT
-OUT=/tmp/gob.out.txt
 if [ -f "${OUT}" ]; then
     rm ${OUT}
 fi
