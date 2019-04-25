@@ -1,7 +1,10 @@
 #!/bin/bash
 
-set -u # crash on missing env
-set -e # stop on any error
+if [ "$1" != "-force" ]
+then
+    set -u # crash on missing env
+    set -e # stop on any error
+fi
 source bash.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
