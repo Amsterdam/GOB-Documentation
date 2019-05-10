@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$1" != "-force" ]
+if [ "$1" != "--force" ]
 then
     set -u # crash on missing env
     set -e # stop on any error
