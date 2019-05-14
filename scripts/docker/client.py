@@ -66,7 +66,7 @@ class MisMatch(AssertionError):
         )
 
 
-class equalTest(unittest.TestCase):
+class Tester(unittest.TestCase):
 
     def is_equal(self, a, b):
         try:
@@ -84,7 +84,7 @@ def check(actual_data, expected_data):
     """
 
     # simple comparison now, could be more restrictive
-    tester = equalTest()
+    tester = Tester()
     if not tester.is_equal(actual_data, expected_data):
         raise MisMatch(actual_data, expected_data)
 
