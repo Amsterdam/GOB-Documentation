@@ -21,6 +21,8 @@ import sys
 import time
 import typing
 
+import unittest
+
 
 try:
     import pytest
@@ -64,13 +66,26 @@ class MisMatch(AssertionError):
         )
 
 
+class equalTest(unittest.TestCase):
+
+    def is_equal(self, a, b):
+        try:
+            l1 = a["results"].sort(key=lambda e: e["string"])
+            l2 = b["results"].sort(key=lambda e: e["string"])
+            self.assertEqual(a, b)
+            return True
+        except Exception as e:
+            print(str(e))
+            return False
+
 def check(actual_data, expected_data):
     """ Checks URI for expected data,
         raises Mismatch if there are differences.
     """
 
     # simple comparison now, could be more restrictive
-    if actual_data != expected_data:
+    tester = equalTest()
+    if not tester.is_equal(actual_data, expected_data):
         raise MisMatch(actual_data, expected_data)
 
 
