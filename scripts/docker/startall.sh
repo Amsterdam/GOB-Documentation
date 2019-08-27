@@ -17,11 +17,6 @@ REPOS="Workflow Import Prepare Upload API Export Management Management-Frontend"
 # GOB Infrastructure dockers
 INFRA="rabbitmq storage management_database"
 
-# Color constants
-NC=$'\e[0m'
-RED=$'\e[31m'
-GREEN=$'\e[32m'
-
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
 
@@ -78,7 +73,7 @@ init () {
             echo "Create empty credentials file (.env) for ${REPO_DIR}"
             cp .env.example .env
         fi
-        cd -
+        cd - > /dev/null
     done
 }
 
@@ -114,6 +109,12 @@ start () {
                 echo " ${CORE_VERSION} ${NC}"
                 echo "Building ${REPO} docker"
                 docker-compose build > /dev/null
+                if [ "$REPO" = "Workflow" ] || [ "$REPO" = "Upload" ]; then
+                  export GOBOPTIONS=--migrate
+                  echo "Migrate ${REPO} database..."
+                  docker-compose up >> ${OUT} 2>&1
+                  export GOBOPTIONS=
+                fi
                 echo "Starting ${REPO} docker"
                 docker-compose up >> ${OUT} 2>&1 &
             fi
