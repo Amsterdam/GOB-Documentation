@@ -64,6 +64,8 @@ cd ../..
 
 ```
 
+When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
+
 ### e2e.sh
 
 #### Requirements
@@ -78,37 +80,41 @@ bash e2e.sh
 cd ../..
 ```
 
-The test results are shown on stdout
+The test results are shown on stdout, the jobs are visible in GOB Management in your browser.
 
 ## Local Development
 
 Follow the instructions in each project to build and start each project.
 
-## Startup
+To start working an a specific GOB module you can stop the docker container and
+run only the specific module that you want to change locally.
 
-GOB requires an infrastructure with a:
-- Shared Network and Shared Volume
-- Message Broker and Databases
-
-### Shared Network and Shared Volume
+If for instance you would like to work on GOB-Export use:
 
 ```bash
-docker network create gob-network
-docker volume create gob-volume --opt device=/tmp --opt o=bind
-```
-### Message Broker and Databases
-
-```bash
-# Message broker and databases
-cd GOB-Infra
-docker-compose up &
-cd ..
+docker stop gobexport
+cd GOB-Export
+# and then follow the steps to start gobexport locally
 ```
 
-For more information see the instructions in the GOB Infra project.
+This works for most modules with the exception of:
+- GOB-Import and GOB-Upload, these modules should run either both locally or both inside a docker.
 
-## Branches
+## Manual Startup
+
+All required setup is done by the startall.sh script as described in the previous paragraph.
+
+If you want to setup the GOB infrastructure manually you can follow the steps as described in the GOB-Infra project.
+
+## Branches and Pull Requests
 
 The master and develop branches in each project are protected against direct updates.
+
 Updates to these branches is uniquely by means of pull requests.
-Pull request are rebased onto the target branch.
+
+Pull request onto the develop branch are **rebased**.
+
+Pull request from develop onto the master branch are **merged**.
+
+Code coverage requirements of a project can only be set the higher values.
+Pull requests that lower the code coverage will be rejected.
