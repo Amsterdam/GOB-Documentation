@@ -78,6 +78,8 @@ bash e2e.sh
 cd ../..
 ```
 
+The test results are shown on stdout
+
 ## Local Development
 
 Follow the instructions in each project to build and start each project.
@@ -101,7 +103,6 @@ docker volume create gob-volume --opt device=/tmp --opt o=bind
 cd GOB-Infra
 docker-compose up &
 cd ..
-
 ```
 
 For more information see the instructions in the GOB Infra project.
