@@ -53,14 +53,14 @@ git clone https://github.com/Amsterdam/GOB-Management-Frontend.git
 * docker-compose >= 1.17
 * docker ce >= 18.03
 
-### startall.sh
+### start GOB
 
-The startall.sh script in the scripts directory initializes and starts all required GOB components
+The gob.sh script in the scripts directory can be used to initialize and start all required GOB components
 
 ```bash
 cd GOB-Documentation/scripts/docker
-bash startall.sh
-cd ../..
+bash gob.sh start
+cd ../../..
 
 ```
 
@@ -77,7 +77,7 @@ After all components have started you can test if GOB is running correctly by us
 ```bash
 cd GOB-Documentation/scripts/docker
 bash e2e.sh
-cd ../..
+cd ../../..
 ```
 
 The test results are shown on stdout, the jobs are visible in GOB Management in your browser.
@@ -102,7 +102,7 @@ This works for most modules with the exception of:
 
 ## Manual Startup
 
-All required setup is done by the startall.sh script as described in the previous paragraph.
+All required setup is done by the "gob.sh start" script as described in the previous paragraph.
 
 If you want to setup the GOB infrastructure manually you can follow the steps as described in the GOB-Infra project.
 
