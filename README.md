@@ -118,3 +118,23 @@ Pull request from develop onto the master branch are **merged**.
 
 Code coverage requirements of a project can only be set the higher values.
 Pull requests that lower the code coverage will be rejected.
+
+## Configuration
+
+GOB is a data driven application and has no hardcoded knowledge of the data it is processing.
+
+The exceptions are GOB-Import and GOB-Export.
+They are the input and output of GOB and are responsable for the conversion of data to and from GOB format.
+Beside the configurations also some hardcoded knowledge of the data may exist in these modules.
+
+The main configuration items are:
+
+- GOB Data
+  - [GOB Data model](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/gobmodel.json)
+  - [GOB Data relations](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/sources/gobsources.json)
+- Import
+  - [GOB Data Preparation definitions](https://github.com/Amsterdam/GOB-Prepare/tree/develop/src/data)
+  - [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Import/tree/develop/src/data)
+- Export
+  - [GOB Views (custom data definitions used by API and Export)](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/views/gobviews.json)
+  - [GOB Export definitions](https://github.com/Amsterdam/GOB-Export/tree/develop/src/gobexport/exporter/config)
