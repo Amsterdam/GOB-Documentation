@@ -10,6 +10,7 @@ step () {
 
 check () {
   curl -s "http://localhost:8141/gob/test_catalogue/test_entity/?ndjson=true" -o output.$1.ndjson
+  sort -o output.$1.ndjson output.$1.ndjson
   DIFF=$(diff output.$1.ndjson expect.$1.ndjson)
   if [ "$DIFF" != "" ]; then
     echo "${RED}FAILED${NC}"
@@ -19,7 +20,7 @@ check () {
 }
 
 # start the imports
-for IMPORT in DELETE_ALL ADD MODIFY1
+for IMPORT in DELETE_ALL ADD MODIFY1 DELETE_ALL ADD MODIFY1
 do
   echo -n "Test ${IMPORT} "
   step "import test_catalogue test_entity ${IMPORT}"
