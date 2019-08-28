@@ -22,8 +22,48 @@ cd $SCRIPTDIR/../../..
 
 stop_docker () {
     DOCKER=$1
-    docker stop ${DOCKER}
+    docker stop ${DOCKER} > /dev/null 2>&1 || true
     # docker rm ${DOCKER}
+}
+
+stop_dockers () {
+    # Stop any running GOB dockers
+    for REPO in ${REPOS}
+    do
+        echo "Stopping docker GOB ${REPO}"
+        DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+        stop_docker $DOCKER > /dev/null
+    done
+
+    for DOCKER in ${INFRA} prepare_database
+    do
+        echo "Stopping docker GOB ${DOCKER}"
+        stop_docker $DOCKER > /dev/null
+    done
+}
+
+show_docker () {
+    GREP=$(docker ps | grep $1) || true
+    if [ "$GREP" = "" ]; then
+        echo " ${RED}DOWN${NC}"
+    else
+        echo " ${GREEN}UP${NC}"
+    fi
+}
+
+list_dockers () {
+    for REPO in ${REPOS}
+    do
+        echo -n ${REPO}
+        DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
+        show_docker ${DOCKER}
+    done
+
+    for DOCKER in ${INFRA} prepare_database
+    do
+        echo -n ${DOCKER}
+        show_docker $DOCKER
+    done
 }
 
 start_infra () {
@@ -40,20 +80,6 @@ start_infra () {
 }
 
 init () {
-    # Stop any running GOB dockers
-    for REPO in ${REPOS}
-    do
-        echo "Stopping docker GOB ${REPO}"
-        DOCKER=$(echo "gob${REPO}" | tr '[:upper:]' '[:lower:]' | tr '-' '_')
-        stop_docker $DOCKER > /dev/null
-    done
-
-    for DOCKER in ${INFRA}
-    do
-        echo "Stopping docker GOB ${DOCKER}"
-        stop_docker $DOCKER > /dev/null
-    done
-
     echo "Creating network gob-network"
     docker network create gob-network
 
@@ -78,6 +104,18 @@ init () {
 }
 
 start () {
+    # Save docker output in $OUT
+    if [ -f "${OUT}" ]; then
+        rm ${OUT}
+    fi
+
+    # Initialize GOB, ignore errors
+    init 2> /dev/null || true
+
+    # build "local" frontend docker
+    export NPMSCRIPT=builddev
+
+    export GOBOPTIONS=
     for REPO in ${BASE_REPOS} ${REPOS}
     do
         echo "${GREEN}${REPO}${NC}"
@@ -99,14 +137,16 @@ start () {
                 echo "GOB Core Version: ${CURRENT_CORE_VERSION}"
             else
                 echo "Starting docker GOB ${REPO}"
-                CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-                echo -n "Core version"
-                if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
-                    echo -n "${GREEN}"
-                else
-                    echo -n "${RED}"
+                if [ -f src/requirements.txt ]; then
+                    CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+                    echo -n "Core version"
+                    if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
+                        echo -n "${GREEN}"
+                    else
+                        echo -n "${RED}"
+                    fi
+                    echo " ${CORE_VERSION} ${NC}"
                 fi
-                echo " ${CORE_VERSION} ${NC}"
                 echo "Building ${REPO} docker"
                 docker-compose build > /dev/null
                 if [ "$REPO" = "Workflow" ] || [ "$REPO" = "Upload" ]; then
@@ -123,20 +163,15 @@ start () {
     done
 }
 
-# Initialize GOB, ignore errors
-init 2> /dev/null || true
-
-# Save docker output in $OUT
-if [ -f "${OUT}" ]; then
-    rm ${OUT}
+if [ "$1" == "start" ]; then
+    stop_dockers
+    start
+    sleep 10
+    list_dockers
+    echo "Output in ${OUT}${NC}"
+elif [ "$1" == "ls" ]; then
+    list_dockers
+elif [ "$1" == "stop" ]; then
+    stop_dockers
 fi
 
-# build "local" frontend docker
-export NPMSCRIPT=builddev
-
-# Start GOB dockers
-start
-
-sleep 10
-NDOCKERS=$(docker ps --format "{{.Names}}" | grep -e "^gob" | wc -l)
-echo "${GREEN}GOB containers (${NDOCKERS}) started, output in ${OUT}${NC}"
