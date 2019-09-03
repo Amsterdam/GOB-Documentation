@@ -5,7 +5,8 @@ then
     set -u # crash on missing env
     set -e # stop on any error
 fi
-source bash.env
+source bash.color.env
+source bash.out.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
 SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
@@ -69,7 +70,7 @@ list_dockers () {
 start_infra () {
     SERVICE=$1
     WAIT_FOR=$2
-    TEMPFILE=$(mktemp /tmp/start_infra.XXXXXX)
+    TEMPFILE=$(mktemp start_infra.XXXXXX)
     echo -n "Starting ${SERVICE}"
     (docker-compose up $1 | tee $TEMPFILE) >> ${OUT} 2>&1 &
     until grep "$WAIT_FOR" $TEMPFILE; do
@@ -84,11 +85,9 @@ init () {
     docker network create gob-network
 
     echo "Creating volume gob-volume"
-    docker volume create gob-volume --opt device=/tmp --opt o=bind > /dev/null
-
-    echo "Clear message broker directory"
-    rm -rf /tmp/message_broker
-    mkdir -m 777 /tmp/message_broker
+    GOB_VOLUME_DIR=${HOME}/gob-volume
+    mkdir -m 777 -p $GOB_VOLUME_DIR/message_broker
+    docker volume create gob-volume --opt device=$GOB_VOLUME_DIR --opt o=bind > /dev/null
 
     echo "Init .env for relevant projects"
     for REPO_DIR in $(find ./ -name ".env.example" -maxdepth 2 -type f | xargs -I{} dirname {})
@@ -174,4 +173,3 @@ elif [ "$1" == "ls" ]; then
 elif [ "$1" == "stop" ]; then
     stop_dockers
 fi
-

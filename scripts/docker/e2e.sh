@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -u
-source bash.env
+source bash.color.env
 
 step () {
   docker exec gobworkflow python -m gobworkflow.start $1 > /dev/null

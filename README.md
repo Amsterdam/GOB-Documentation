@@ -11,38 +11,44 @@ Within this directory the GOB projects can be instantiated.
 mkdir gob
 cd gob
 
+# Use this if you prefer to clone via SSH:
+GITHUB=git@github.com:
+# Uncomment this if you prefer to clone via HTTPS:
+# GITHUB=https://github.com/
+
 # GOB Documentation (this project)
-git clone https://github.com/Amsterdam/GOB-Documentation.git
+git clone $GITHUB/Amsterdam/GOB-Documentation.git
 
 # GOB Infra (GOB infrastructure components)
-git clone https://github.com/Amsterdam/GOB-Infra.git
+git clone $GITHUB/Amsterdam/GOB-Infra.git
 
 # GOB Core (GOB shared code)
-git clone https://github.com/Amsterdam/GOB-Core.git
+git clone $GITHUB/Amsterdam/GOB-Core.git
 
 # GOB Workflow (the workflow router)
-git clone https://github.com/Amsterdam/GOB-Workflow.git
+git clone $GITHUB/Amsterdam/GOB-Workflow.git
 
 # GOB Prepare (preparation of data before import)
-git clone https://github.com/Amsterdam/GOB-Prepare.git
+git clone $GITHUB/Amsterdam/GOB-Prepare.git
 
 # GOB Import (the import of the GOB sources)
-git clone https://github.com/Amsterdam/GOB-Import.git
+git clone $GITHUB/Amsterdam/GOB-Import.git
 
 # GOB Upload (the upload of imported data into GOB)
-git clone https://github.com/Amsterdam/GOB-Upload.git
+git clone $GITHUB/Amsterdam/GOB-Upload.git
 
 # GOB API (the exposure of GOB data via an API)
-git clone https://github.com/Amsterdam/GOB-API.git
+git clone $GITHUB/Amsterdam/GOB-API.git
 
 # GOB Export (the construction of GOB "products")
-git clone https://github.com/Amsterdam/GOB-Export.git
+git clone $GITHUB/Amsterdam/GOB-Export.git
 
 # GOB Management API (GOB management overview and control - API)
-git clone https://github.com/Amsterdam/GOB-Management.git
+git clone $GITHUB/Amsterdam/GOB-Management.git
 
 # GOB Management Frontend (GOB management overview and control - frontend)
-git clone https://github.com/Amsterdam/GOB-Management-Frontend.git
+git clone $GITHUB/Amsterdam/GOB-Management-Frontend.git
+
 
 ```
 
@@ -62,6 +68,7 @@ cd GOB-Documentation/scripts/docker
 bash gob.sh start
 cd ../../..
 
+
 ```
 
 When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
@@ -78,6 +85,8 @@ After all components have started you can test if GOB is running correctly by us
 cd GOB-Documentation/scripts/docker
 bash e2e.sh
 cd ../../..
+
+
 ```
 
 The test results are shown on stdout, the jobs are visible in GOB Management in your browser.
@@ -95,6 +104,8 @@ If for instance you would like to work on GOB-Export use:
 docker stop gobexport
 cd GOB-Export
 # and then follow the steps to start gobexport locally
+
+
 ```
 
 This works for most modules with the exception of:
