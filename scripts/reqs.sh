@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 
-# Color constants
-NC=$'\e[0m'
-RED=$'\e[31m'
-GREEN=$'\e[32m'
+source bash.color.env
 
 # Required software and versions
 REQUIREMENTS="docker docker_compose python3 node npm"
