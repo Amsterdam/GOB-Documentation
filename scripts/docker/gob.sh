@@ -16,7 +16,7 @@ BASE_REPOS="Infra Core"
 REPOS="Workflow Import Prepare Upload API Export Management Management-Frontend"
 
 # GOB Infrastructure dockers
-INFRA="rabbitmq storage management_database"
+INFRA="rabbitmq storage management_database airflow_database"
 
 # Change to GOB directory
 cd $SCRIPTDIR/../../..
@@ -126,7 +126,7 @@ start () {
 
             if [ "$REPO" = "Infra" ]; then
                 echo "Starting GOB infrastructure"
-                for SERVICE in database management_database; do
+                for SERVICE in database management_database airflow_database; do
                     start_infra $SERVICE "database system is ready to accept connections"
                 done
                 start_infra rabbitmq "Server startup complete"
