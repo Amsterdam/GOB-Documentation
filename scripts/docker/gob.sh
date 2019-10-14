@@ -148,12 +148,6 @@ start () {
                 fi
                 echo "Building ${REPO} docker"
                 docker-compose build > /dev/null
-                if [ "$REPO" = "Workflow" ] || [ "$REPO" = "Upload" ]; then
-                  export GOBOPTIONS=--migrate
-                  echo "Migrate ${REPO} database..."
-                  docker-compose up >> ${OUT} 2>&1
-                  export GOBOPTIONS=
-                fi
                 echo "Starting ${REPO} docker"
                 docker-compose up >> ${OUT} 2>&1 &
             fi
