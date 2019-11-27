@@ -1,10 +1,5 @@
 #!/bin/bash
 
-if [ "$1" != "--force" ]
-then
-    set -u # crash on missing env
-    set -e # stop on any error
-fi
 source bash.color.env
 source bash.out.env
 
@@ -155,6 +150,14 @@ start () {
         cd ..
     done
 }
+
+if [ "$1" == "--force" ]
+then
+    shift
+else
+    set -u # crash on missing env
+    set -e # stop on any error
+fi
 
 if [ "$1" == "start" ]; then
     stop_dockers
