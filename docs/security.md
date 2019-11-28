@@ -31,6 +31,8 @@ Fernet also has support for implementing key rotation via MultiFernet.
 
 Fernet uses 128-bit AES in CBC mode and PKCS7 padding, with HMAC using SHA256 for authentication.
 
+[Link to documentaion](https://cryptography.io/en/latest/fernet/)
+
 ## Logic
 
 The main implementation of the security measures is within GOB-Core.
