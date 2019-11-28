@@ -3,14 +3,9 @@
 In the most basic terms, Data Security is the process of keeping data secure
 and protected from unauthorized access.
 
-The digital privacy measures that are applied within GOB to avoid unauthorized access have been worked out in a Proof Of Concept.
+## Example
 
-The goal of the Proof Of Concept is to explain, document, and allow reviews and audits on
-the GOB privacy measures before the measures get implemented on real data.
-
-## Proof Of Concept
-
-The Proof of Concept shows the implementation of the GOB privacy measures by using a
+An example is available shows the implementation of the GOB privacy measures by using a
 small dataset. The dataset is located at Objectstore (Basisinformatie, acceptatie/secure/secure.csv).
 
 The dataset contains examples of strings, numbers and dates that are assumed to be private data
@@ -24,12 +19,28 @@ Keycloak is an open source Identity and Access Management solution.
 Users authenticate with Keycloak rather than individual applications.
 This means that GOB doesn't have to deal with login forms, authenticating users, and storing users.
 
+## Fernet (symmetric encryption) library
+
+The encryption library that is used within GOB is fernet.
+
+Fernet guarantees that a message encrypted using it cannot be manipulated or read without the key.
+
+Fernet is an implementation of symmetric (also known as “secret key”) authenticated cryptography.
+
+Fernet also has support for implementing key rotation via MultiFernet.
+
+Fernet uses 128-bit AES in CBC mode and PKCS7 padding, with HMAC using SHA256 for authentication.
+
 ## Logic
 
 The main implementation of the security measures is within GOB-Core.
 
 Data is secured during import and exposed by the API.
 These GOB modules use the logic that is implemented by GOB Core to protect sensitive data.
+
+Other modules do not need and do not have any knowledge about security.
+For these modules a secure attribute is an attribute as all the others.
+Only from the type it can be derived if an attribute is secured.
 
 ### Importing (GOB Import)
 
@@ -102,11 +113,10 @@ The key index denotes the id of the secret key that has been used to encrypt the
 
 The combination of confidence level and key index points to a secret that will be used to encrypt the data.
 
-#### Asymmetrical encryption
+#### Symmetrical encryption
 
-It is proposed to use an asymmetric encryption algorithm.
-The secrets that are used in GOB Import only allow encryption of sensitive data.
-The secrets that are used in GOB API only allow for decryption of sensitive data.
+A symmetrical encryption algorithm is used within GOB.
+GOB Import and GOB API share common secrets to encrypt and decrypt secure data.
 
 #### Key management
 
@@ -132,6 +142,11 @@ Sensitive data is stored within GOB as a JSON structure:
         "v": _encrypt(value, secret)  # The encrypted data
     }
 ```    
+
+The JSON structure is converted to a string in order to be transparant during the processing.
+
+Relations based on secure data can work as before, as long as the comparison is based upon equality of attributes.
+When attributes compare equal they also compare equal when they are secured.
 
 #### Protection of sensitive data by GOB Core
 
