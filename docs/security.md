@@ -31,7 +31,22 @@ Fernet also has support for implementing key rotation via MultiFernet.
 
 Fernet uses 128-bit AES in CBC mode and PKCS7 padding, with HMAC using SHA256 for authentication.
 
-[Link to documentaion](https://cryptography.io/en/latest/fernet/)
+[Link to documentation](https://cryptography.io/en/latest/fernet/)
+
+## AES 128 (symmetric encryption)
+
+Secure attributes should preferably be encrypted using the Fernet encryption library.
+
+However, for values that are references to other collections it is important
+(although not required but then significant code changes in the relate code would be required)
+that identical values map on idential encrypted values.
+
+For these values AES 128 in ECB mode is used.
+
+AES 128 should only be used for short values so that the number of ciphertext blocks (16 bytes each) is small,
+and for values that do not contain duplicates.
+
+Normally reference fields fulfill these conditions.
 
 ## Logic
 
