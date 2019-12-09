@@ -73,24 +73,6 @@ cd ../../..
 
 When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
 
-### e2e.sh
-
-#### Requirements
-
-* curl >= 7.0
-
-After all components have started you can test if GOB is running correctly by using the e2e.sh script
-
-```bash
-cd GOB-Documentation/scripts/docker
-bash e2e.sh
-cd ../../..
-
-
-```
-
-The test results are shown on stdout, the jobs are visible in GOB Management in your browser.
-
 ## Local Development
 
 Follow the instructions in each project to build and start each project.
