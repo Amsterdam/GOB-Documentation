@@ -73,6 +73,10 @@ cd ../../..
 
 When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
 
+### End-to-End tests
+
+The End-to-End tests can be found in the GOB-Workflow repo. See the GOB-Workflow repo.
+
 ## Local Development
 
 Follow the instructions in each project to build and start each project.
