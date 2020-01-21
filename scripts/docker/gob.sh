@@ -82,7 +82,7 @@ init () {
     echo "Creating volume gob-volume"
     GOB_VOLUME_DIR=${HOME}/gob-volume
     mkdir -m 777 -p $GOB_VOLUME_DIR/message_broker
-    docker volume create gob-volume --opt device=$GOB_VOLUME_DIR --opt o=bind > /dev/null
+    docker volume create gob-volume --opt device=$GOB_VOLUME_DIR --opt o=bind --opt type=tmpfs > /dev/null
 
     echo "Init .env for relevant projects"
     for REPO_DIR in $(find ./ -name ".env.example" -maxdepth 2 -type f | xargs -I{} dirname {})
