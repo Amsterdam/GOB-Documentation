@@ -63,7 +63,7 @@ The access to secured data can be tested by simulating gatekeeper headers.
 
 For example:
 
-curl -H "X-Auth-Roles:gob_adm,gob_secure_attrs" -H "X-Auth-Userid:jurien" http://localhost:8141/gob/secure/test_catalogue/anydata/ | json_pp
+curl -H "X-Auth-Roles:gob_adm,gob_secure_attrs" -H "X-Auth-Userid:user" http://localhost:8141/gob/secure/test_catalogue/anydata/ | json_pp
 
 ## References:
 - [GOB Documentation](https://github.com/Amsterdam/GOB-Documentation)
