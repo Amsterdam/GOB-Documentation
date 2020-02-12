@@ -135,3 +135,14 @@ The main configuration items are:
 - Export
   - [GOB Views (custom data definitions used by API and Export)](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/views/gobviews.json)
   - [GOB Export definitions](https://github.com/Amsterdam/GOB-Export/tree/develop/src/gobexport/exporter/config)
+  
+Other interesting documentation:
+
+- [GOB Basic Principles](https://github.com/Amsterdam/GOB-Documentation/blob/master/docs/basic_principles.md)
+- [GOB Security](https://github.com/Amsterdam/GOB-Documentation/blob/master/docs/security.md)
+- [GOB Id's](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/README.md)
+- [GOB Event handling](https://github.com/Amsterdam/GOB-Upload/blob/develop/src/gobupload/storage/README.md)
+- [GOB Relations](https://github.com/Amsterdam/GOB-Upload/blob/develop/src/gobupload/relate/README.md)
+- [GOB Dump to other database](https://github.com/Amsterdam/GOB-API/tree/develop/src/gobapi/dump)
+- [GOB Autentication and Authorization](https://github.com/Amsterdam/GOB-API/blob/develop/src/gobapi/auth/README.md)
+
