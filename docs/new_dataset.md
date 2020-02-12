@@ -59,6 +59,10 @@ From there on the data can be exported to export files, analysis databases, etce
 
 ## Testing
 
+The access to secured data can be tested by simulating gatekeeper headers.
+
+For example:
+
 curl -H "X-Auth-Roles:gob_adm,gob_secure_attrs" -H "X-Auth-Userid:jurien" http://localhost:8141/gob/secure/test_catalogue/anydata/ | json_pp
 
 ## References:
