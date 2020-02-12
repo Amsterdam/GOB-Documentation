@@ -1,6 +1,8 @@
 # How to add a new data collection to GOB
 
-Adding a data collection to GOB requires a few steps.
+Adding a data collection to GOB requires a few steps and involves a number of GOB Components
+
+![img](New dataset containers.png)
 
 ## Model definition
 - [GOB Data model](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/gobmodel.json)
@@ -26,6 +28,9 @@ The one application for example can refer to another collection by a code and an
 
 For every reference attribute the referenced attribute in the other collection needs to be defined as well as the method to resolve the relation.
 Currently the equals and lies_in methods have been implemented to resolve a relation.
+
+## Scenario
+![img](demo scenario.png)
 
 ## GOB-Core release
 
