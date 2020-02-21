@@ -14,7 +14,7 @@ cd gob
 # Use this if you prefer to clone via SSH:
 GITHUB=git@github.com:
 # Uncomment this if you prefer to clone via HTTPS:
-# GITHUB=https://github.com/
+# GITHUB=https://github.com
 
 # GOB Documentation (this project)
 git clone $GITHUB/Amsterdam/GOB-Documentation.git
