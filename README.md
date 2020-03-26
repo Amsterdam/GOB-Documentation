@@ -43,6 +43,9 @@ git clone $GITHUB/Amsterdam/GOB-API.git
 # GOB Export (the construction of GOB "products")
 git clone $GITHUB/Amsterdam/GOB-Export.git
 
+# GOB Test (GOB end-2-end tests)
+git clone $GITHUB/Amsterdam/GOB-Test.git
+
 # GOB Management API (GOB management overview and control - API)
 git clone $GITHUB/Amsterdam/GOB-Management.git
 
