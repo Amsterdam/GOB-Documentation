@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source bash.color.env
-source bash.out.env
+source ../bash.color.env
+source ../bash.out.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
 SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
