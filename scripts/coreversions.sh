@@ -17,6 +17,16 @@ UPDATE_BRANCH="update_shared_${DT}"
 # The file to update
 LOCAL_REQUIREMENTS=src/requirements.txt
 
+update_libs() {
+  for LIB in ${LIBS}; do
+    GOB_LIB="GOB-${LIB}"
+    echo "Update ${GOB_LIB}..."
+    cd ${GOB_LIB}
+    $EXEC git pull
+    cd ..
+  done
+}
+
 get_lib_version() {
   cd ${GOB_LIB}
   LIB_VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))
@@ -152,6 +162,8 @@ elif [ ! -z "$1" ]; then
   # Unknown parameter, show usage
   usage
 fi
+
+update_libs
 
 for REPO in ${REPOS}; do
   GOB_REPO="GOB-${REPO}"
