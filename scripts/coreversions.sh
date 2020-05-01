@@ -134,7 +134,7 @@ commit_any_updates() {
 }
 
 usage() {
-  echo "Usage: $(basename $0) [--dry-run] [--update | --back-to-develop]"
+  echo "Usage: bash $(basename $0) [--dry-run] [--update | --back-to-develop]"
   echo "Show versions of shared libraries for each GOB repository"
   echo ""
   echo "  --dry-run          Show actions that would be executed"
