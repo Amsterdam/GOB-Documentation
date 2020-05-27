@@ -82,7 +82,7 @@ update_version() {
   if [ ! -z "${REPO_LIB_VERSION}" ] && [ "${REPO_LIB_VERSION}" != "${LIB_VERSION}" ]; then
     set_update_message "${GOB_LIB} ${REPO_LIB_VERSION} to ${LIB_VERSION}"
     # The repo has a lib version that is not equal to the latest version
-    $EXEC sed -i -E "s/${SED_EXPR}/\1${LIB_VERSION}\3/" ${REQUIREMENTS}
+    $EXEC sed -i '' -E "s/${SED_EXPR}/\1${LIB_VERSION}\3/" ${REQUIREMENTS}
   fi
 }
 
