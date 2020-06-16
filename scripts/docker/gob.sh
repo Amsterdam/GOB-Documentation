@@ -151,6 +151,12 @@ start () {
     done
 }
 
+if [ -z "$1" ]
+then
+  echo "Parameters missing. Start with ./gobacc.sh (--force) [start|stop|ls]"
+  exit 1
+fi
+
 if [ "$1" == "--force" ]
 then
     shift
