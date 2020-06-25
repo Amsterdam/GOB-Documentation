@@ -25,6 +25,9 @@ git clone $GITHUB/Amsterdam/GOB-Infra.git
 # GOB Core (GOB shared code)
 git clone $GITHUB/Amsterdam/GOB-Core.git
 
+# GOB Config (GOB shared configuration)
+git clone $GITHUB/Amsterdam/GOB-Config.git
+
 # GOB Workflow (the workflow router)
 git clone $GITHUB/Amsterdam/GOB-Workflow.git
 
