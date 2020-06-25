@@ -137,7 +137,7 @@ The main configuration items are:
   - [GOB Data relations](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/sources/gobsources.json)
 - Import
   - [GOB Data Preparation definitions](https://github.com/Amsterdam/GOB-Prepare/tree/develop/src/data)
-  - [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Import/tree/develop/src/data)
+  - [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Config/tree/master/gobconfig/import_/data)
 - Export
   - [GOB Views (custom data definitions used by API and Export)](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/views/gobviews.json)
   - [GOB Export definitions](https://github.com/Amsterdam/GOB-Export/tree/develop/src/gobexport/exporter/config)
