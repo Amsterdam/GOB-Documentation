@@ -39,7 +39,7 @@ stop_dockers () {
 }
 
 show_docker () {
-    GREP=$(docker ps | grep $1) || true
+    GREP=$(docker ps | grep "$1$") || true
     if [ "$GREP" = "" ]; then
         echo " ${RED}DOWN${NC}"
     else
