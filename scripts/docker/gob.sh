@@ -8,7 +8,7 @@ SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 
 # List of all GOB repositories.
 BASE_REPOS="Infra Core"
-REPOS="Workflow Import Prepare Upload API Export Test Message Stuf Management Management-Frontend"
+REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend"
 
 # GOB Infrastructure dockers
 INFRA="rabbitmq storage management_database analyse_database"

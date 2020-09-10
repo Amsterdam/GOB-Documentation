@@ -49,6 +49,12 @@ git clone $GITHUB/Amsterdam/GOB-Export.git
 # GOB Test (GOB end-2-end tests)
 git clone $GITHUB/Amsterdam/GOB-Test.git
 
+# GOB Message (receives mutation or signal messages from external systems)
+git clone $GITHIB/Amsterdam/GOB-Message.git
+
+# GOB StUF (GOB StUF provides for StUF access)
+git clone $GITHUB/Amsterdam/GOB-StUF.git
+
 # GOB Management API (GOB management overview and control - API)
 git clone $GITHUB/Amsterdam/GOB-Management.git
 
