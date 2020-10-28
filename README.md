@@ -46,11 +46,14 @@ git clone $GITHUB/Amsterdam/GOB-API.git
 # GOB Export (the construction of GOB "products")
 git clone $GITHUB/Amsterdam/GOB-Export.git
 
+# GOB Distribute (distribution of GOB "products")
+git clone $GITHUB/Amsterdam/GOB-Distribute.git
+
 # GOB Test (GOB end-2-end tests)
 git clone $GITHUB/Amsterdam/GOB-Test.git
 
 # GOB Message (receives mutation or signal messages from external systems)
-git clone $GITHIB/Amsterdam/GOB-Message.git
+git clone $GITHUB/Amsterdam/GOB-Message.git
 
 # GOB StUF (GOB StUF provides for StUF access)
 git clone $GITHUB/Amsterdam/GOB-StUF.git
@@ -87,7 +90,7 @@ When the script has finished successfully you can start GOB Management in your b
 
 ### End-to-End tests
 
-The End-to-End tests can be found in the GOB-Workflow repo. See the GOB-Workflow repo.
+The End-to-End tests can be found in the GOB-Test repo. See the GOB-Test repo.
 
 ## Local Development
 
