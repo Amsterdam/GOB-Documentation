@@ -73,6 +73,7 @@ Contains conversion and validation logic
 Derives events by comparing new data with existing data  
 Stores events  
 Apply events
+Relate datasets
  
 - API  
 Exposes GOB data via a REST and GraphQL API
@@ -81,16 +82,48 @@ Exposes GOB data via a REST and GraphQL API
 Uses the API to generate export files.  
 The export files are written to an Objectstore container or to local files
 
+- Distribute  
+Component that distributes export products to external locations.
+
 - Workflow  
 Routes messages  
 Collects and stores log messages  
 Registers heartbeats
+Contains CLI for starting jobs
 
 - Management API    
 Exposes the state of GOB, jobs and logging via a GraphQL API endpoint
 
 - Management frontend  
 PWA frontend that shows the status of GOB, its jobs and corresponding logging
+
+- Prepare
+Used for certain datasets to perform some preprocessing before importing.
+
+- Message  
+Receives and processes mutation messages. At this moment for the HR dataset.
+
+- StUF  
+Exposes a REST BRP API. Translates the incoming requests to StUF requests, performs a StUF request to the MKS backend
+and transforms the response to a REST response.
+
+Supporting repositories are:
+
+- Test  
+Contains end-to-end tests that 1. test the GOB functionality from import to export and 2. test the consistency of the
+data between the source and the ultimate export (analyse db).
+
+- Core  
+Contains shared functionality (such as logging, message broker, type system etc) and the data model
+
+- Config  
+Contains shared configuration, such as import definitions and data store connections.
+
+- Infra  
+Contains the infra to run GOB in a development environment
+
+- Documentation  
+This repo
 
 ## Extensive testing
 
