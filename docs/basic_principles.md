@@ -104,7 +104,8 @@ Used for certain datasets to perform some preprocessing before importing.
 Receives and processes mutation messages. At this moment for the HR dataset.
 
 - StUF  
-Exposes a REST BRP API. Translates the incoming requests to StUF requests, performs a StUF request to the MKS backend
+Exposes a REST BRP API based on specifications by Haal Centraal (https://github.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen). 
+Translates the incoming requests to StUF requests, performs a StUF request to the MKS backend
 and transforms the response to a REST response.
 
 Supporting repositories are:
@@ -114,7 +115,7 @@ Contains end-to-end tests that 1. test the GOB functionality from import to expo
 data between the source and the ultimate export (analyse db).
 
 - Core  
-Contains shared functionality (such as logging, message broker, type system etc) and the data model
+Contains shared functionality (such as logging, message broker, encryption, type system etc) and the data model
 
 - Config  
 Contains shared configuration, such as import definitions and data store connections.

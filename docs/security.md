@@ -31,7 +31,7 @@ Fernet also has support for implementing key rotation via MultiFernet.
 
 Fernet uses 128-bit AES in CBC mode and PKCS7 padding, with HMAC using SHA256 for authentication.
 
-[Link to documentation](https://cryptography.io/en/latest/fernet/)
+[Link to documentation](https://cryptography.io/en/latest/fernet.html/)
 
 ## AES 128 (symmetric encryption)
 
@@ -63,7 +63,7 @@ Only from the type it can be derived if an attribute is secured.
 
 Within GOB Import the mapping of the demo file onto the corresponding GOB Model has been defined.
 
-[secure.csv mapping](https://github.com/Amsterdam/GOB-Import/blob/6fa79c3e87a61ddc10b785eee8835e6273ce3ffd/src/data/secure.csv.json)
+[secure.csv mapping](https://github.com/Amsterdam/GOB-Config/blob/master/gobconfig/import_/data/secure.csv.json)
 
 As can be seen in this mapping no knowledge or whatsoever of data security is is registered in the import definition.
 
@@ -109,9 +109,9 @@ By itself, the API will never be able to provide access to sensitive data.
 ### GOB Core
 
 Within GOB Core the
-[demo Model](https://github.com/Amsterdam/GOB-Core/blob/81928c4af735881443347eebb8a3fb6663241dad/gobcore/model/gobmodel.json)
+[demo Model](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/gobmodel.json)
 has been defined, as well as
-[user roles and authorization levels](https://github.com/Amsterdam/GOB-Core/blob/81928c4af735881443347eebb8a3fb6663241dad/gobcore/secure/config.py)
+[user roles and authorization levels](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/secure/config.py)
 
 A secure package has been added to GOB Core to actual implement the security measures.
 
