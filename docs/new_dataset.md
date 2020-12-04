@@ -38,12 +38,12 @@ When the model and the relations have been defined a new version of GOB-Core as 
 The Import, Upload and API modules need to be updated with the new release.
 GOB-Upload is the “owner” of the storage database and will have to generate and run the required migration:
 - alembic revision --autogenerate -m "any data"
-- controleer de migratie
+- validate the migration
 - start gobupload
 
 ## Import data definition
 
-- [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Import/tree/develop/src/data)
+- [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Config/tree/master/gobconfig/import_)
 
 With the new release of GOB-Core GOB knows the new data collection.
 The next part is to import the data from a specific source.
