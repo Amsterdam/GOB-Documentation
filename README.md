@@ -17,55 +17,55 @@ GITHUB=git@github.com:
 # GITHUB=https://github.com
 
 # GOB Documentation (this project)
-git clone $GITHUB/Amsterdam/GOB-Documentation.git Documentation
+git clone $GITHUB/Amsterdam/GOB-Documentation.git
 
 # GOB Infra (GOB infrastructure components)
-git clone $GITHUB/Amsterdam/GOB-Infra.git Infra
+git clone $GITHUB/Amsterdam/GOB-Infra.git
 
 # GOB Core (GOB shared code)
-git clone $GITHUB/Amsterdam/GOB-Core.git Core
+git clone $GITHUB/Amsterdam/GOB-Core.git
 
 # GOB Config (GOB shared configuration)
-git clone $GITHUB/Amsterdam/GOB-Config.git Config
+git clone $GITHUB/Amsterdam/GOB-Config.git
 
 # GOB Workflow (the workflow router)
-git clone $GITHUB/Amsterdam/GOB-Workflow.git Workflow
+git clone $GITHUB/Amsterdam/GOB-Workflow.git
 
 # GOB Prepare (preparation of data before import)
-git clone $GITHUB/Amsterdam/GOB-Prepare.git Prepare
+git clone $GITHUB/Amsterdam/GOB-Prepare.git
 
 # GOB BagExtract (the bag extract of the GOB sources)
-git clone $GITHUB/Amsterdam/GOB-BagExtract.git BagExtract
+git clone $GITHUB/Amsterdam/GOB-BagExtract.git
 
 # GOB Import (the import of the GOB sources)
-git clone $GITHUB/Amsterdam/GOB-Import.git Import
+git clone $GITHUB/Amsterdam/GOB-Import.git
 
 # GOB Upload (the upload of imported data into GOB)
-git clone $GITHUB/Amsterdam/GOB-Upload.git Upload
+git clone $GITHUB/Amsterdam/GOB-Upload.git
 
 # GOB API (the exposure of GOB data via an API)
-git clone $GITHUB/Amsterdam/GOB-API.git GOB-API
+git clone $GITHUB/Amsterdam/GOB-API.git
 
 # GOB Export (the construction of GOB "products")
-git clone $GITHUB/Amsterdam/GOB-Export.git GOB-Export
+git clone $GITHUB/Amsterdam/GOB-Export.git
 
 # GOB Distribute (distribution of GOB "products")
-git clone $GITHUB/Amsterdam/GOB-Distribute.git Distribute
+git clone $GITHUB/Amsterdam/GOB-Distribute.git
 
 # GOB Test (GOB end-2-end tests)
-git clone $GITHUB/Amsterdam/GOB-Test.git Test
+git clone $GITHUB/Amsterdam/GOB-Test.git
 
 # GOB Message (receives mutation or signal messages from external systems)
-git clone $GITHUB/Amsterdam/GOB-Message.git Message
+git clone $GITHUB/Amsterdam/GOB-Message.git
 
 # GOB StUF (GOB StUF provides for StUF access)
 git clone $GITHUB/Amsterdam/GOB-StUF.git StUFF
 
 # GOB Management API (GOB management overview and control - API)
-git clone $GITHUB/Amsterdam/GOB-Management.git Management
+git clone $GITHUB/Amsterdam/GOB-Management.git
 
 # GOB Management Frontend (GOB management overview and control - frontend)
-git clone $GITHUB/Amsterdam/GOB-Management-Frontend.git Management-Frontend
+git clone $GITHUB/Amsterdam/GOB-Management-Frontend.git
 
 
 ```
