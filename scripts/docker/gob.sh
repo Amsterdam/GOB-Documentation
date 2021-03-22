@@ -8,7 +8,7 @@ SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
 
 # List of all GOB repositories.
 BASE_REPOS="Infra Core"
-ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract"
+ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract KafkaProducer"
 
 REPOS=${REPOS:-${ALL_REPOS}}
 
