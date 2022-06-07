@@ -67,6 +67,8 @@ git clone $GITHUB/Amsterdam/GOB-Management.git
 # GOB Management Frontend (GOB management overview and control - frontend)
 git clone $GITHUB/Amsterdam/GOB-Management-Frontend.git
 
+# GOB KafkaProducer
+git clone $GITHUB/Amsterdam/GOB-KafkaProducer.git
 
 ```
 
