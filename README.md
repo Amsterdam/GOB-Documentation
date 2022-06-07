@@ -59,7 +59,7 @@ git clone $GITHUB/Amsterdam/GOB-Test.git
 git clone $GITHUB/Amsterdam/GOB-Message.git
 
 # GOB StUF (GOB StUF provides for StUF access)
-git clone $GITHUB/Amsterdam/GOB-StUF.git StUFF
+git clone $GITHUB/Amsterdam/GOB-StUF.git
 
 # GOB Management API (GOB management overview and control - API)
 git clone $GITHUB/Amsterdam/GOB-Management.git
@@ -153,7 +153,7 @@ The main configuration items are:
 - Export
   - [GOB Views (custom data definitions used by API and Export)](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/views)
   - [GOB Export definitions](https://github.com/Amsterdam/GOB-Export/tree/develop/src/gobexport/exporter/config)
-  
+
 Other interesting documentation:
 
 - [GOB Basic Principles](https://github.com/Amsterdam/GOB-Documentation/blob/master/docs/basic_principles.md)
@@ -162,5 +162,5 @@ Other interesting documentation:
 - [GOB Event handling](https://github.com/Amsterdam/GOB-Upload/blob/develop/src/gobupload/storage/README.md)
 - [GOB Relations](https://github.com/Amsterdam/GOB-Upload/blob/develop/src/gobupload/relate/README.md)
 - [GOB Dump to other database](https://github.com/Amsterdam/GOB-API/tree/develop/src/gobapi/dump)
-- [GOB Autentication and Authorization](https://github.com/Amsterdam/GOB-API/blob/develop/src/gobapi/auth/README.md)
+- [GOB Authentication and Authorization](https://github.com/Amsterdam/GOB-API/blob/develop/src/gobapi/auth/README.md)
 
