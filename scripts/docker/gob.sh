@@ -1,10 +1,18 @@
 #!/bin/bash
 
-source ../bash.color.env
-source ../bash.out.env
 
 # Start from directory where this script is located (GOB-Documentation/scripts)
-SCRIPTDIR="$( cd "$( dirname "$0" )" >/dev/null && pwd )"
+SCRIPTDIR="$( dirname $0 )/.."
+cd "${SCRIPTDIR}"
+
+source bash.color.env
+source bash.out.env
+
+# Change to the GOB directory.
+cd ../..
+
+# Script path.
+SCRIPT_PATH="$0"
 
 # List of all GOB repositories.
 BASE_REPOS="Infra Core"
@@ -155,7 +163,7 @@ start () {
 
 if [ -z "$1" ]
 then
-  echo "Parameters missing. Start with ./gobacc.sh (--force) [start|stop|ls]"
+  echo "Parameters missing. Start with ${SCRIPT_PATH} (--force) [start|stop|ls]"
   exit 1
 fi
 
