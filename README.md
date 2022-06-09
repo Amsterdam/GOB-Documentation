@@ -79,23 +79,35 @@ git clone $GITHUB/Amsterdam/GOB-KafkaProducer.git
 * docker-compose >= 1.17
 * docker ce >= 18.03
 
-### start GOB
+### Start GOB
 
-The gob.sh script in the scripts directory can be used to initialize and start all required GOB components
+The `gob.sh` script in the scripts directory can be used to initialize and start all required GOB components:
 
 ```bash
-cd GOB-Documentation/scripts/docker
-bash gob.sh start
-cd ../../..
-
-
+./GOB-Documentation/scripts/docker/gob.sh start
 ```
 
 When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
 
+### Show GOB components
+
+Show the status of the GOB components:
+
+```bash
+./GOB-Documentation/scripts/docker/gob.sh ls
+```
+
+### Stop GOB
+
+Stop the GOB components with the `gob.sh` script:
+
+```bash
+./GOB-Documentation/scripts/docker/gob.sh stop
+```
+
 ### End-to-End tests
 
-The End-to-End tests can be found in the GOB-Test repo. See the GOB-Test repo.
+The End-to-End tests can be found in the GOB-Test repo. See the [GOB-Test repo](https://github.com/Amsterdam/GOB-Test).
 
 ## Local Development
 
