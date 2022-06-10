@@ -177,7 +177,7 @@ if [ "$1" == "start" ]; then
     start
     sleep 10
     list_dockers
-    echo "Output in ${OUT}${NC}"
+    echo -e "\nOutput in ${OUT}${NC}"
 elif [ "$1" == "ls" ]; then
     list_dockers
 elif [ "$1" == "stop" ]; then
