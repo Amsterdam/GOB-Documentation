@@ -1,15 +1,12 @@
 #!/bin/bash
 
 
-# Start from directory where this script is located (GOB-Documentation/scripts)
-SCRIPTDIR="$( dirname $0 )/.."
-cd "${SCRIPTDIR}"
+# Start from directory where this script is located (GOB-Documentation/scripts/docker)
+SCRIPTDIR="$( dirname $0 )"
+cd "${SCRIPTDIR}/.."
 
 source bash.color.env
 source bash.out.env
-
-# Change to the GOB directory.
-cd ../..
 
 # Script path.
 SCRIPT_PATH="$0"
