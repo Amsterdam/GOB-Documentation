@@ -8,16 +8,15 @@ cd "${SCRIPTDIR}/.."
 source bash.color.env
 source bash.out.env
 
-# Script path.
-SCRIPT_PATH="$0"
+# Script usage.
+USAGE="Usage: $( basename $0 ) (--force) [start|stop|ls]"
 
-# List of all GOB repositories.
-BASE_REPOS="Infra Core"
+# GOB components (compose projects).
 ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract KafkaProducer"
 
 REPOS=${REPOS:-${ALL_REPOS}}
 
-# GOB Infrastructure compose project
+# GOB Infrastructure compose project.
 INFRA="Infra"
 
 # Change to GOB directory
@@ -115,41 +114,46 @@ start () {
     init 2> /dev/null || true
     echo -e "${BOLD_BLACK}Output${NC} in ${OUT}\n"
 
+    # Start GOB Infrastructure first
+    cd "GOB-${INFRA}"
+    echo "Starting ${BOLD_BLACK}GOB Infrastructure${NC}"
+    for SERVICE in database management_database analyse_database; do
+        start_infra $SERVICE "database system is ready to accept connections"
+    done
+    start_infra rabbitmq "Server startup complete"
+    cd ..
+
+    # GOB Core version
+    cd "GOB-Core"
+    CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+    CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
+    echo "${BOLD_BLACK}GOB Core${NC} Version: ${GREEN}${CURRENT_CORE_VERSION}${NC}"
+    cd ..
+
+    # GOB components.
     export GOBOPTIONS=
-    for REPO in ${BASE_REPOS} ${REPOS}
+    for REPO in ${REPOS}
     do
         GOB_REPO="GOB-${REPO}"
 
         # Initialize each repository
         cd ${GOB_REPO}
 
-            if [ "$REPO" = "Infra" ]; then
-                echo "Starting ${BOLD_BLACK}GOB Infrastructure${NC}"
-                for SERVICE in database management_database analyse_database; do
-                    start_infra $SERVICE "database system is ready to accept connections"
-                done
-                start_infra rabbitmq "Server startup complete"
-            elif [ "$REPO" = "Core" ]; then
-                CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-                CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
-                echo "${BOLD_BLACK}GOB Core${NC} Version: ${GREEN}${CURRENT_CORE_VERSION}${NC}"
+        echo "Starting ${BOLD_BLACK}GOB ${REPO}${NC}"
+        if [ -f src/requirements.txt ]; then
+            CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+            echo -n "Core version"
+            if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
+                echo -n "${GREEN}"
             else
-                echo "Starting ${BOLD_BLACK}GOB ${REPO}${NC}"
-                if [ -f src/requirements.txt ]; then
-                    CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-                    echo -n "Core version"
-                    if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
-                        echo -n "${GREEN}"
-                    else
-                        echo -n "${RED}"
-                    fi
-                    echo " ${CORE_VERSION} ${NC}"
-                fi
-                echo "Building ${GOB_REPO} compose project"
-                docker compose build > /dev/null
-                echo "Starting ${GOB_REPO} compose project"
-                docker compose up >> ${OUT} 2>&1 &
+                echo -n "${RED}"
             fi
+            echo " ${CORE_VERSION} ${NC}"
+        fi
+        echo "Building ${GOB_REPO} compose project"
+        docker compose build > /dev/null
+        echo "Starting ${GOB_REPO} compose project"
+        docker compose up >> ${OUT} 2>&1 &
 
         cd ..
     done
@@ -157,7 +161,7 @@ start () {
 
 if [ -z "$1" ]
 then
-  echo "Parameters missing. Start with ${SCRIPT_PATH} (--force) [start|stop|ls]"
+  echo -e "Parameters missing.\n${USAGE}"
   exit 1
 fi
 
@@ -180,6 +184,6 @@ elif [ "$1" == "ls" ]; then
 elif [ "$1" == "stop" ]; then
     stop_projects
 else
-  echo "Invalid parameters. Start with ${SCRIPT_PATH} (--force) [start|stop|ls]"
+  echo -e "Invalid parameter '$1'.\n${USAGE}"
   exit 1
 fi
