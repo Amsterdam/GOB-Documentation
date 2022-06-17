@@ -2,11 +2,14 @@
 
 
 # Start from directory where this script is located (GOB-Documentation/scripts/docker)
-SCRIPTDIR="$( dirname $0 )"
-cd "${SCRIPTDIR}/.."
+ENV_DIR="$( dirname $0 )/.."
 
-source bash.color.env
-source bash.out.env
+source "$ENV_DIR/bash.color.env"
+source "$ENV_DIR/bash.out.env"
+
+# Change to GOB directory
+cd "$( dirname $0 )/../../.."
+GOB_BASE_DIR="${PWD}"
 
 # Script usage.
 USAGE="Usage: $( basename $0 ) (--force) [start|stop|ls]"
@@ -18,10 +21,6 @@ REPOS=${REPOS:-${ALL_REPOS}}
 
 # GOB Infrastructure compose project.
 INFRA="Infra"
-
-# Change to GOB directory
-cd "$SCRIPTDIR/../../.."
-GOB_BASE_DIR="${PWD}"
 
 stop_project () {
     cd "${GOB_BASE_DIR}/${1}"
