@@ -1,9 +1,8 @@
 #!/bin/bash
 
 
-# Start from directory where this script is located (GOB-Documentation/scripts/docker)
+# Bash env files directory (GOB-Documentation/scripts/)
 ENV_DIR="$( dirname $0 )/.."
-
 source "$ENV_DIR/bash.color.env"
 source "$ENV_DIR/bash.out.env"
 
@@ -124,9 +123,14 @@ start () {
 
     # GOB Core version
     cd "GOB-Core"
-    CORE_VERSION=$(grep "GOB-Core" requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
     CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
     echo "${BOLD_BLACK}GOB Core${NC} Version: ${GREEN}${CURRENT_CORE_VERSION}${NC}"
+    cd ..
+
+    # GOB Config version
+    cd "GOB-Config"
+    CURRENT_CONFIG_VERSION=$(git describe --abbrev=0 --tags)
+    echo "${BOLD_BLACK}GOB Config${NC} Version: ${GREEN}${CURRENT_CONFIG_VERSION}${NC}"
     cd ..
 
     # GOB components.
@@ -137,8 +141,9 @@ start () {
 
         # Initialize each repository
         cd ${GOB_REPO}
-
         echo "Starting ${BOLD_BLACK}GOB ${REPO}${NC}"
+
+        # Recent Core version?
         if [ -f src/requirements.txt ]; then
             CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
             echo -n "Core version"
@@ -149,6 +154,20 @@ start () {
             fi
             echo " ${CORE_VERSION} ${NC}"
         fi
+        # Recent Config version?
+        if [ -f src/requirements.txt ]; then
+            CONFIG_VERSION=$(grep "GOB-Config" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+            if [ -n "${CONFIG_VERSION}" ]; then
+                echo -n "Config version"
+                if [ "${CONFIG_VERSION}" = "${CURRENT_CONFIG_VERSION}" ]; then
+                    echo -n "${GREEN}"
+                else
+                    echo -n "${RED}"
+                fi
+                echo " ${CONFIG_VERSION} ${NC}"
+            fi
+        fi
+
         echo "Building ${GOB_REPO} compose project"
         docker compose build > /dev/null
         echo "Starting ${GOB_REPO} compose project"
