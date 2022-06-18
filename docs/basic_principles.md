@@ -39,12 +39,12 @@ Data that is processed by GOB is structured data.
 The definition of the data is registered in the GOB-Core repository (gobcore/model).
 This is a simple json file that describes which catalogs and collections are handled by GOB.
 
-The model is a direct representation of Stelselpedia (https://www.amsterdam.nl/stelselpedia/)
+The model is a direct representation of [Stelselpedia](https://www.amsterdam.nl/stelselpedia/).
 
 The import of data into GOB is by means of mapping definitions.
 A mapping definition defines how the imported data can be translated into GOB format.
 
-Examples of mappings can be found in the GOB-Import repository (src/data)
+Examples of mappings can be found in the GOB-Config repository (`gobconfig/import_/data/`)
 
 The further handling of data is completely data driven and agnostic as to the type of data that is handled.
 
