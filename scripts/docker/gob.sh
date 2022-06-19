@@ -11,7 +11,7 @@ cd "$( dirname $0 )/../../.."
 GOB_BASE_DIR="${PWD}"
 
 # Script usage.
-USAGE="Usage: $( basename $0 ) (--force) [start|stop|ls]"
+USAGE="Usage: $( basename $0 ) (--force) [start|stop|ls|version]"
 
 # GOB components (compose projects).
 ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract KafkaProducer"
@@ -102,6 +102,32 @@ init () {
     done
 }
 
+get_gob_version () {
+    # Return current version of GOB-Core or GOB-Config
+    cd "GOB-$1"
+    local CURRENT_VERSION=$(git describe --abbrev=0 --tags)
+    cd ..
+    echo "${CURRENT_VERSION}"
+}
+
+show_component_version () {
+    # $1: Core|Config; $2: ${CURRENT_CORE_VERSION}|${CURRENT_CONFIG_VERSION}
+
+    # GOB-(Core|Config) version of GOB component
+    if [ -f src/requirements.txt ]; then
+        local COMP_VERSION=$(grep "GOB-$1" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+        if [ -n "${COMP_VERSION}" ]; then
+            echo -n "$1 version"
+            if [ "${COMP_VERSION}" = "$2" ]; then
+                echo -n "${GREEN}"
+            else
+                echo -n "${RED}"
+            fi
+            echo " ${COMP_VERSION} ${NC}"
+        fi
+    fi
+}
+
 start () {
     # Save docker output in $OUT
     if [ -f "${OUT}" ]; then
@@ -122,16 +148,12 @@ start () {
     cd ..
 
     # GOB Core version
-    cd "GOB-Core"
-    CURRENT_CORE_VERSION=$(git describe --abbrev=0 --tags)
+    CURRENT_CORE_VERSION=$(get_gob_version "Core")
     echo "${BOLD_BLACK}GOB Core${NC} Version: ${GREEN}${CURRENT_CORE_VERSION}${NC}"
-    cd ..
 
     # GOB Config version
-    cd "GOB-Config"
-    CURRENT_CONFIG_VERSION=$(git describe --abbrev=0 --tags)
+    CURRENT_CONFIG_VERSION=$(get_gob_version "Config")
     echo "${BOLD_BLACK}GOB Config${NC} Version: ${GREEN}${CURRENT_CONFIG_VERSION}${NC}"
-    cd ..
 
     # GOB components.
     export GOBOPTIONS=
@@ -143,30 +165,10 @@ start () {
         cd ${GOB_REPO}
         echo "Starting ${BOLD_BLACK}GOB ${REPO}${NC}"
 
-        # Recent Core version?
-        if [ -f src/requirements.txt ]; then
-            CORE_VERSION=$(grep "GOB-Core" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-            echo -n "Core version"
-            if [ "${CORE_VERSION}" = "${CURRENT_CORE_VERSION}" ]; then
-                echo -n "${GREEN}"
-            else
-                echo -n "${RED}"
-            fi
-            echo " ${CORE_VERSION} ${NC}"
-        fi
-        # Recent Config version?
-        if [ -f src/requirements.txt ]; then
-            CONFIG_VERSION=$(grep "GOB-Config" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
-            if [ -n "${CONFIG_VERSION}" ]; then
-                echo -n "Config version"
-                if [ "${CONFIG_VERSION}" = "${CURRENT_CONFIG_VERSION}" ]; then
-                    echo -n "${GREEN}"
-                else
-                    echo -n "${RED}"
-                fi
-                echo " ${CONFIG_VERSION} ${NC}"
-            fi
-        fi
+        # GOB Core version
+        show_component_version "Core" "${CURRENT_CORE_VERSION}"
+        # GOB Config version
+        show_component_version "Config" "${CURRENT_CONFIG_VERSION}"
 
         echo "Building ${GOB_REPO} compose project"
         docker compose build > /dev/null
@@ -176,6 +178,31 @@ start () {
         cd ..
     done
 }
+
+show_versions () {
+    # Current GOB Core version
+    CURRENT_CORE_VERSION=$(get_gob_version "Core")
+    echo "${BOLD_BLACK}GOB Core${NC} Version: ${GREEN}${CURRENT_CORE_VERSION}${NC}"
+    # Current GOB Config version
+    CURRENT_CONFIG_VERSION=$(get_gob_version "Config")
+    echo -e "${BOLD_BLACK}GOB Config${NC} Version: ${GREEN}${CURRENT_CONFIG_VERSION}${NC}\n"
+
+    # Show Core and Config versions of GOB component
+    for REPO in ${REPOS}
+    do
+        cd "GOB-${REPO}"
+
+        echo "${BOLD_BLACK}GOB ${REPO}${NC}"
+
+        # GOB Core version
+        show_component_version "Core" "${CURRENT_CORE_VERSION}"
+        # GOB Config version
+        show_component_version "Config" "${CURRENT_CONFIG_VERSION}"
+
+        cd ..
+    done
+}
+
 
 if [ -z "$1" ]
 then
@@ -201,6 +228,8 @@ elif [ "$1" == "ls" ]; then
     show_projects
 elif [ "$1" == "stop" ]; then
     stop_projects
+elif [ "$1" == "version" ]; then
+    show_versions
 else
   echo -e "Invalid parameter '$1'.\n${USAGE}"
   exit 1
