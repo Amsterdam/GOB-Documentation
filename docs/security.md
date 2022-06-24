@@ -1,7 +1,6 @@
 # GOB Data Security measures
 
-In the most basic terms, Data Security is the process of keeping data secure
-and protected from unauthorized access.
+In the most basic terms, Data Security is the process of keeping data secure and protected from unauthorized access.
 
 ## Example
 
@@ -31,7 +30,7 @@ Fernet also has support for implementing key rotation via MultiFernet.
 
 Fernet uses 128-bit AES in CBC mode and PKCS7 padding, with HMAC using SHA256 for authentication.
 
-[Link to documentation](https://cryptography.io/en/latest/fernet.html/)
+[Link to documentation](https://cryptography.io/en/latest/fernet/)
 
 ## AES 128 (symmetric encryption)
 
@@ -50,7 +49,7 @@ Normally reference fields fulfill these conditions.
 
 ## Logic
 
-The main implementation of the security measures is within GOB-Core.
+The main implementation of the security measures is within [GOB-Core](https://github.com/Amsterdam/GOB-Core).
 
 Data is secured during import and exposed by the API.
 These GOB modules use the logic that is implemented by GOB Core to protect sensitive data.
@@ -61,18 +60,18 @@ Only from the type it can be derived if an attribute is secured.
 
 ### Importing (GOB Import)
 
-Within GOB Import the mapping of the demo file onto the corresponding GOB Model has been defined.
+Within [GOB Import](https://github.com/Amsterdam/GOB-Import) the mapping of the demo file onto the corresponding GOB Model has been defined.
 
 [secure.csv mapping](https://github.com/Amsterdam/GOB-Config/blob/master/gobconfig/import_/data/secure.csv.json)
 
-As can be seen in this mapping no knowledge or whatsoever of data security is is registered in the import definition.
+As can be seen in this mapping no knowledge or whatsoever of data security is registered in the import definition.
 
 Data security is defined in the GOB Model and not in individual import specifications.
 
 #### Data is secured as soon at is received.
 
 The data Reader class, that handles all reading of data of all possible kind of datasources (Oracle, Objecstore, Postgress, ...),
-has been extended with extra functionality. 
+has been extended with extra functionality.
 
 The data Reader is instantiated with an extra argument; the data import specification.
 
@@ -81,7 +80,7 @@ Data with secure datatypes is protected against accidental reading by removing i
 
 This measure prevents that sensitive data gets logged, for example:
 
-_"Adres van mevrouw Jansen (BSN: 201333557) is incorrect"_ 
+_"Adres van mevrouw Jansen (BSN: 201333557) is incorrect"_
 
 Sensitive data are removed entirely from the dataset and replaced by a random number that has no relation at all with the real data.
 
@@ -97,7 +96,7 @@ When sensitive data is handled, the reference to the real value is used to safel
 
 Within GOB Core secure datatypes have been added (SecureString, SecureDecimal, SecureDateTime).
 
-Within the API, any access to instances of any of these datatypes is handeld by a dedicated resolver / serializer.
+Within the API, any access to instances of any of these datatypes is handled by a dedicated resolver / serializer.
 
 The resolver derives the user information from the Keycloak header (X-Auth-Roles).
 The user information is handed over to GOB-Core to check for the required access level.
@@ -115,7 +114,7 @@ has been defined, as well as
 
 A secure package has been added to GOB Core to actual implement the security measures.
 
-The main module within this package is crypto.py.
+The main module within this package is `crypto.py`.
 This module contains code to encrypt and decrypt data, as well as to protect sensitive data against accidental logging.
 
 #### Confidence level
@@ -133,7 +132,7 @@ The combination of confidence level and key index points to a secret that will b
 #### Symmetrical encryption
 
 A symmetrical encryption algorithm is used within GOB.
-GOB Import and GOB API share common secrets to encrypt and decrypt secure data.
+GOB Import and [GOB API](https://github.com/Amsterdam/GOB-API) share common secrets to encrypt and decrypt secure data.
 
 #### Key management
 
@@ -152,13 +151,13 @@ Changes of confidence levels and key indexes are most easily, but not necessaril
 
 Sensitive data is stored within GOB as a JSON structure:
 
-```
+```json
    {
         "i": key_index,               # Allows for key change
         "l": confidence_level,        # Some data is more confident that other data
         "v": _encrypt(value, secret)  # The encrypted data
     }
-```    
+```
 
 The JSON structure is converted to a string in order to be transparant during the processing.
 
