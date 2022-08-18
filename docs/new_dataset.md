@@ -1,43 +1,45 @@
 # How to add a new data collection to GOB
 
-Adding a data collection to GOB requires a few steps and involves a number of GOB Components
+Adding a data collection to GOB requires a few steps and involves a number of GOB Components:
 
 ![img](https://github.com/Amsterdam/GOB-Documentation/blob/master/docs/New%20dataset%20containers.png)
 
 ## Model definition
-- [GOB Data model](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/gobmodel.json)
+- GOB Data model: [`gobmodel.json`](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/model/gobmodel.json)
 
 The first step is to define the model.
 Data in GOB is organised in catalogs and collections.
 An example is the stadsdelen collection in the gebieden catalog.
 
 The following information need to be registered:
+
 - name and abbreviaton
 - version
-- the identification attribute
+- the identification attribute (`entity_id`)
 - and for every attribute at least a name, type and description
 
 Attributes that are references to other collections should speficy the catalog and collection to which the attribute refers.
 
 ## Model relations
-- [GOB Data relations](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/sources/gobsources.json)
+- GOB Data relations: [`gobsources.json`](https://github.com/Amsterdam/GOB-Core/blob/master/gobcore/sources/gobsources.json)
 
 Relations are registered separately from the model.
 This is because the implementation of a relation can differ per application.
 The one application for example can refer to another collection by a code and another can do the same by an id.
 
 For every reference attribute the referenced attribute in the other collection needs to be defined as well as the method to resolve the relation.
-Currently the equals and lies_in methods have been implemented to resolve a relation.
+Currently the `equals` and `lies_in` methods have been implemented to resolve a relation.
 
 ## Scenario
 ![img](https://github.com/Amsterdam/GOB-Documentation/blob/master/docs/demo%20scenario.png)
 
 ## GOB-Core release
 
-When the model and the relations have been defined a new version of GOB-Core as to be released.
-The Import, Upload and API modules need to be updated with the new release.
+When the model and the relations have been defined a new version of [GOB-Core](https://github.com/Amsterdam/GOB-Core) has to be released.
+The [Import](https://github.com/Amsterdam/GOB-Import), [Upload](https://github.com/Amsterdam/GOB-Upload) and [API](https://github.com/Amsterdam/GOB-API) modules need to be updated with the new release.
 GOB-Upload is the “owner” of the storage database and will have to generate and run the required migration:
-- alembic revision --autogenerate -m "any data"
+
+- `alembic revision --autogenerate -m "any data"`
 - validate the migration
 - start gobupload
 
@@ -45,7 +47,7 @@ GOB-Upload is the “owner” of the storage database and will have to generate 
 
 - [GOB Data Import definitions](https://github.com/Amsterdam/GOB-Config/tree/master/gobconfig/import_)
 
-With the new release of GOB-Core GOB knows the new data collection.
+With the new release of GOB-Core, GOB knows the new data collection.
 The next part is to import the data from a specific source.
 
 Importing data is done by means of an import definition.
@@ -59,11 +61,13 @@ From there on the data can be exported to export files, analysis databases, etce
 
 ## Testing
 
-The access to secured data can be tested by simulating gatekeeper headers.
+The access to secured data can be tested by simulating OAuth2 Proxy headers.
 
 For example:
 
+```bash
 curl -H "X-Auth-Roles:gob_adm,gob_secure_attrs" -H "X-Auth-Userid:user" http://localhost:8141/gob/secure/test_catalogue/anydata/ | json_pp
+```
 
 ## References:
 - [GOB Documentation](https://github.com/Amsterdam/GOB-Documentation)

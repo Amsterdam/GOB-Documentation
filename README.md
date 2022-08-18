@@ -1,6 +1,6 @@
 # GOB-Documentation
 
-GOB overall project documentation
+GOB overall project documentation.
 
 ## Environment
 
@@ -76,8 +76,9 @@ git clone $GITHUB/Amsterdam/GOB-KafkaProducer.git
 
 ### Requirements
 
-* docker-compose >= 1.17
-* docker ce >= 18.03
+* docker compose >= 1.25
+* Docker CE >= 18.09
+* Python 3.9
 
 ### Start GOB
 
@@ -87,7 +88,7 @@ The `gob.sh` script in the scripts directory can be used to initialize and start
 ./GOB-Documentation/scripts/docker/gob.sh start
 ```
 
-When the script has finished successfully you can start GOB Management in your browser at: http://localhost:8080
+When the script has finished successfully you can start [GOB Management](http://github.com/Amsterdam/GOB-Management) in your browser at: `http://localhost:8080`.
 
 ### Show GOB components
 
@@ -107,7 +108,7 @@ Stop the GOB components with the `gob.sh` script:
 
 ### End-to-End tests
 
-The End-to-End tests can be found in the GOB-Test repo. See the [GOB-Test repo](https://github.com/Amsterdam/GOB-Test).
+The End-to-End tests can be found in the [GOB-Test](https://github.com/Amsterdam/GOB-Test) repo. See the [GOB-Test repo](https://github.com/Amsterdam/GOB-Test).
 
 ## Local Development
 
@@ -116,24 +117,22 @@ Follow the instructions in each project to build and start each project.
 To start working an a specific GOB module you can stop the docker container and
 run only the specific module that you want to change locally.
 
-If for instance you would like to work on GOB-Export use:
+If for instance you would like to work on [GOB-Export](https://github.com/Amsterdam/GOB-Export) use:
 
 ```bash
 docker stop gobexport
 cd GOB-Export
 # and then follow the steps to start gobexport locally
-
-
 ```
 
 This works for most modules with the exception of:
-- GOB-Import and GOB-Upload, these modules should run either both locally or both inside a docker.
+- [GOB-Import](https://github.com/Amsterdam/GOB-Import) and [GOB-Upload](https://github.com/Amsterdam/GOB-Upload), these modules should run either both locally or both inside a docker.
 
 ## Manual Startup
 
 All required setup is done by the "gob.sh start" script as described in the previous paragraph.
 
-If you want to setup the GOB infrastructure manually you can follow the steps as described in the GOB-Infra project.
+If you want to setup the GOB infrastructure manually you can follow the steps as described in the [GOB-Infra](https://github.com/Amsterdam/GOB-Infra) project.
 
 ## Branches and Pull Requests
 
@@ -177,4 +176,3 @@ Other interesting documentation:
 - [GOB Relations](https://github.com/Amsterdam/GOB-Upload/blob/develop/src/gobupload/relate/README.md)
 - [GOB Dump to other database](https://github.com/Amsterdam/GOB-API/tree/develop/src/gobapi/dump)
 - [GOB Authentication and Authorization](https://github.com/Amsterdam/GOB-API/blob/develop/src/gobapi/auth/README.md)
-
