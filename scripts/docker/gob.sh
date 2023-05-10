@@ -14,7 +14,7 @@ GOB_BASE_DIR="${PWD}"
 USAGE="Usage: $( basename $0 ) (--force) [start|stop|ls|version]"
 
 # GOB components (compose projects).
-ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract KafkaProducer"
+ALL_REPOS="Workflow Import Prepare Upload API Export Test Message StUF Management Management-Frontend Distribute BagExtract EventConsumer EventProducer"
 
 REPOS=${REPOS:-${ALL_REPOS}}
 
@@ -90,12 +90,12 @@ init () {
     docker volume create gob-volume --opt device=$GOB_VOLUME_DIR --opt o=bind --opt type=tmpfs > /dev/null
 
     echo "Init .env for relevant compose projects"
-    for REPO_DIR in $(find ./ -name ".env.example" -maxdepth 2 -type f | xargs -I{} dirname {})
+    for REPO_DIR in $(find . -name ".env.example" -maxdepth 2 -type f | xargs dirname)
     do
         cd $REPO_DIR
         if [ ! -f .env ]
         then
-            echo "Create empty credentials file (.env) for ${REPO_DIR}"
+            echo "Create empty credentials file (.env) for `basename ${REPO_DIR}`"
             cp .env.example .env
         fi
         cd - > /dev/null
@@ -115,7 +115,7 @@ show_component_version () {
 
     # GOB-(Core|Config) version of GOB component
     if [ -f src/requirements.txt ]; then
-        local COMP_VERSION=$(grep "GOB-$1" src/requirements.txt | sed -E "s/^.*@(v.*)#.*$/\1/")
+        local COMP_VERSION=$(grep "GOB-$1" src/requirements.txt | sed -E "s/^.*@(v[0-9.]+).*$/\1/")
         if [ -n "${COMP_VERSION}" ]; then
             echo -n "$1 version"
             if [ "${COMP_VERSION}" = "$2" ]; then
@@ -141,7 +141,7 @@ start () {
     # Start GOB Infrastructure first
     cd "GOB-${INFRA}"
     echo "Starting ${BOLD_BLACK}GOB Infrastructure${NC}"
-    for SERVICE in database management_database analyse_database; do
+    for SERVICE in database management_database; do
         start_infra $SERVICE "database system is ready to accept connections"
     done
     start_infra rabbitmq "Server startup complete"
