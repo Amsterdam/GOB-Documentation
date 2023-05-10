@@ -4,7 +4,7 @@ GOB overall project documentation.
 
 ## Environment
 
-The preferred way to work on GOB is to have all GOB projects in a separate GOB directory.
+The preferred way to work on GOB is to have all GOB projects in a separate `gob` directory.
 Within this directory the GOB projects can be instantiated.
 
 ```bash
@@ -67,8 +67,11 @@ git clone $GITHUB/Amsterdam/GOB-Management.git
 # GOB Management Frontend (GOB management overview and control - frontend)
 git clone $GITHUB/Amsterdam/GOB-Management-Frontend.git
 
-# GOB KafkaProducer
-git clone $GITHUB/Amsterdam/GOB-KafkaProducer.git
+# GOB EventConsumer (Consumes events to update the RefDB)
+git clone $GITHUB/Amsterdam/GOB-EventConsumer.git
+
+# GOB EventProducer (Reads GOB events, transforms them to a generic format and sends these to a different exchange)
+git clone $GITHUB/Amsterdam/GOB-EventProducer.git
 
 ```
 
@@ -108,7 +111,7 @@ Stop the GOB components with the `gob.sh` script:
 
 ### End-to-End tests
 
-The End-to-End tests can be found in the [GOB-Test](https://github.com/Amsterdam/GOB-Test) repo. See the [GOB-Test repo](https://github.com/Amsterdam/GOB-Test).
+The End-to-End tests can be found in the [GOB-Test](https://github.com/Amsterdam/GOB-Test) repo.
 
 ## Local Development
 
@@ -130,7 +133,7 @@ This works for most modules with the exception of:
 
 ## Manual Startup
 
-All required setup is done by the "gob.sh start" script as described in the previous paragraph.
+All required setup is done by the `gob.sh start` script as described in the previous paragraph.
 
 If you want to setup the GOB infrastructure manually you can follow the steps as described in the [GOB-Infra](https://github.com/Amsterdam/GOB-Infra) project.
 
